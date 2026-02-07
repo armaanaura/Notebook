@@ -1,5 +1,74 @@
 # Cycles in Graphs — Complete Mastery Notes
 
+# Index
+
+* [Cycles in Graphs — Complete Mastery Notes](#cycles-in-graphs--complete-mastery-notes)
+
+  * [1. Graph Fundamentals (Cycle-focused)](#1-graph-fundamentals-cycle-focused)
+
+    * [1.1 Formal definition of a cycle](#11-formal-definition-of-a-cycle)
+    * [1.2 Distinctions: simple cycle, back edge, self-loop, multi-cycle graphs](#12-distinctions-simple-cycle-back-edge-self-loop-multi-cycle-graphs)
+    * [1.3 Why cycle problems differ from traversal problems](#13-why-cycle-problems-differ-from-traversal-problems)
+  * [2. Directed vs Undirected Graphs (CRITICAL SECTION)](#2-directed-vs-undirected-graphs-critical-section)
+
+    * [2.1 Structural differences](#21-structural-differences)
+    * [2.2 Why the same logic does not apply](#22-why-the-same-logic-does-not-apply)
+    * [2.3 Comparison table](#23-comparison-table)
+    * [2.4 Same structure behaving differently: Mermaid diagrams](#24-same-structure-behaving-differently-mermaid-diagrams)
+  * [3. Cycle Detection Algorithms (With When-to-Use Rules)](#3-cycle-detection-algorithms-with-when-to-use-rules)
+
+    * [3.0 Selection rules (high-level)](#30-selection-rules-high-level)
+    * [3.1 DFS + Parent (Undirected)](#31-dfs--parent-undirected)
+    * [3.2 DFS + Recursion Stack (Directed)](#32-dfs--recursion-stack-directed)
+    * [3.3 BFS-based detection (when applicable)](#33-bfs-based-detection-when-applicable)
+    * [3.4 Union-Find (Disjoint Set Union) — Undirected](#34-union-find-disjoint-set-union--undirected)
+    * [3.5 Topological Sort (Kahn’s Algorithm) — Directed](#35-topological-sort-kahns-algorithm--directed)
+    * [3.6 Floyd’s Cycle Detection (Tortoise-Hare) — Functional Graphs](#36-floyds-cycle-detection-tortoise-hare--functional-graphs)
+  * [4. Cycle Extraction (Edges & Vertices)](#4-cycle-extraction-edges--vertices)
+
+    * [4.1 Extracting one cycle in undirected graph (DFS parent backtracking)](#41-extracting-one-cycle-in-undirected-graph-dfs-parent-backtracking)
+    * [4.2 Extracting one cycle in directed graph (back edge to recursion stack)](#42-extracting-one-cycle-in-directed-graph-back-edge-to-recursion-stack)
+    * [4.3 Extracting cycle edges](#43-extracting-cycle-edges)
+    * [4.4 Why some algorithms cannot reconstruct cycles](#44-why-some-algorithms-cannot-reconstruct-cycles)
+    * [4.5 Example diagrams](#45-example-diagrams)
+  * [5. All Nodes That Belong to Any Cycle](#5-all-nodes-that-belong-to-any-cycle)
+
+    * [5.1 Why this is harder than detecting a single cycle](#51-why-this-is-harder-than-detecting-a-single-cycle)
+    * [5.2 Directed graphs: SCCs (Tarjan / Kosaraju)](#52-directed-graphs-sccs-tarjan--kosaraju)
+    * [5.3 Undirected graphs: bridges and biconnected components](#53-undirected-graphs-bridges-and-biconnected-components)
+  * [6. Removing Cycles](#6-removing-cycles)
+
+    * [6.1 Removing a single cycle](#61-removing-a-single-cycle)
+    * [6.2 Removing all cycles (making graph acyclic)](#62-removing-all-cycles-making-graph-acyclic)
+    * [6.3 “Remove minimum edges” is non-trivial](#63-remove-minimum-edges-is-non-trivial)
+    * [6.4 Relationship to Minimum Spanning Tree and Feedback Edge Set](#64-relationship-to-minimum-spanning-tree-and-feedback-edge-set)
+  * [7. What Is NEVER Possible in Graphs (IMPORTANT)](#7-what-is-never-possible-in-graphs-important)
+
+    * [7.1 Enumerating all cycles efficiently (output-sensitive limitations)](#71-enumerating-all-cycles-efficiently-output-sensitive-limitations)
+    * [7.2 Minimum feedback vertex/edge set in directed graphs (NP-hard)](#72-minimum-feedback-vertexedge-set-in-directed-graphs-np-hard)
+    * [7.3 Minimum cycle cover in general graphs (clarify definitions)](#73-minimum-cycle-cover-in-general-graphs-clarify-definitions)
+    * [7.4 “Find the shortest simple cycle in directed graph” vs “shortest cycle”](#74-find-the-shortest-simple-cycle-in-directed-graph-vs-shortest-cycle)
+  * [8. Problem-Type Decision Tree](#8-problem-type-decision-tree)
+  * [9. LeetCode Mapping (VERY IMPORTANT)](#9-leetcode-mapping-very-important)
+  * [10. Common Interview Questions & Answers](#10-common-interview-questions--answers)
+
+    * [10.1 “Can Union-Find give the cycle path?”](#101-can-union-find-give-the-cycle-path)
+    * [10.2 “Are bridge endpoints articulation points?”](#102-are-bridge-endpoints-articulation-points)
+    * [10.3 “Does a DAG ever contain a cycle?”](#103-does-a-dag-ever-contain-a-cycle)
+    * [10.4 “Can DFS find all cycles?”](#104-can-dfs-find-all-cycles)
+    * [10.5 “In directed graphs, is an edge to a visited node always a cycle?”](#105-in-directed-graphs-is-an-edge-to-a-visited-node-always-a-cycle)
+  * [11. Mental Models & Graph Tricks](#11-mental-models--graph-tricks)
+
+    * [11.1 Inverse thinking](#111-inverse-thinking)
+    * [11.2 Reducing to known cycle patterns](#112-reducing-to-known-cycle-patterns)
+    * [11.3 Disguised cycle problems](#113-disguised-cycle-problems)
+  * [12. Summary Cheat-Sheets](#12-summary-cheat-sheets)
+
+    * [12.1 Algorithms vs capabilities](#121-algorithms-vs-capabilities)
+    * [12.2 Directed vs Undirected rules](#122-directed-vs-undirected-rules)
+    * [12.3 Detection vs extraction vs elimination](#123-detection-vs-extraction-vs-elimination)
+
+
 ## 1. Graph Fundamentals (Cycle-focused)
 
 ### 1.1 Formal definition of a cycle
