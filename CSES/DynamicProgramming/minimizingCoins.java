@@ -53,10 +53,10 @@ public class minimizingCoins {
         int amount = sc.nextInt();
         int coins[] = new int[n];
         // states = new int[amount+1];
-        for(int i=0;i<n;i++)coins[i]=sc.nextInt();
         // Arrays.fill(states,-1);
         // int ans = memo(coins, amount);
         // System.out.println(ans>=1000001||ans==Integer.MAX_VALUE?-1:ans);
+        for(int i=0;i<n;i++)coins[i]=sc.nextInt();
         int ans = tab(coins, amount);
         System.out.println(ans>=1000001||ans==Integer.MAX_VALUE?-1:ans);
     }
