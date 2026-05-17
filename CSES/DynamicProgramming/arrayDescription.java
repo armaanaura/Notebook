@@ -33,8 +33,22 @@ public class arrayDescription {
     public static int[][]states;
     public static int mod = 1_000_000_007;
     public static int tab(int n, int m, int[]array){
-        // tabulation is pending
-        return 0;
+        int [][] dp = new int[n][m+1];
+        for(int j=1;j<=m;j++)dp[0][j] = array[0]==0?1 : (array[0] == j ? 1: 0);
+        for(int i=1;i<n;i++){
+            for(int j=1;j<=m;j++){
+                if(array[i]!=0){
+                    if(array[i]==j){
+                        dp[i][j] = (((dp[i-1][j]) + (j<m ? dp[i-1][j+1] : 0))% mod + (j>1?dp[i-1][j-1]:0) ) % mod;
+                    }
+                    continue;
+                }
+                dp[i][j] = (((dp[i-1][j]) + (j<m ? dp[i-1][j+1] : 0)) % mod + (j>1?dp[i-1][j-1]:0) ) % mod;
+            }
+        }
+        int ans = 0;
+        for(int j=1;j<=m;j++)ans=(ans+dp[n-1][j])%mod;
+        return ans;
     }
     public static int memo(int n, int m, int[]array, int index, int prev){
         if(index>=n)return 1;
@@ -62,14 +76,16 @@ public class arrayDescription {
         for(int i=0;i<n;i++){
             array[i]=sc.nextInt();
         }
-        states = new int[n][m+1];
-        for(int[] temp:states)Arrays.fill(temp,-1);
-        int ans = 0;
-        if(array[0]!=0){
-            ans = memo(n, m, array, 0, array[0]);
-        }else{
-            for(int i=1;i<=m;i++)ans=(ans+memo(n,m,array,1,i))%mod;
-        }
+        // states = new int[n][m+1];
+        // for(int[] temp:states)Arrays.fill(temp,-1);
+        // int ans = 0;
+        // if(array[0]!=0){
+        //     ans = memo(n, m, array, 0, array[0]);
+        // }else{
+        //     for(int i=1;i<=m;i++)ans=(ans+memo(n,m,array,1,i))%mod;
+        // }
+
+        int ans = tab(n,m,array);
         System.out.println(ans);
         // System.out.println(tab(prices, pages, budget));
     }
