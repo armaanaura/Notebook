@@ -1,0 +1,2776 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSES Dynamic Programming — Complete Java 17 Code + FAANG DP</title>
+<style>
+
+@page { size: A4 landscape; margin: 6mm; }
+
+:root {
+  --ink: #111;
+  --muted: #444;
+  --line: #a0a0a0;
+  --soft: #f7f7f7;
+  --paper: #fff;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--paper); }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8pt;
+  line-height: 1.25;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+header {
+  border-bottom: 1.3pt solid var(--ink);
+  padding-bottom: 1.6mm;
+  margin-bottom: 2mm;
+}
+
+header h1 {
+  font-size: 15pt;
+  letter-spacing: .15px;
+  margin-bottom: .6mm;
+}
+
+header p {
+  font-size: 7.4pt;
+  color: var(--muted);
+}
+
+.learning, .study, .checklist, .bugs {
+  border: .55pt solid var(--line);
+  padding: 1.4mm 1.6mm;
+  margin: 1.8mm 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.learning h2, .study h2, .checklist h2, .bugs h2 {
+  font-size: 9.4pt;
+  margin-bottom: 1mm;
+}
+
+.learning-grid, .study-grid, .bugs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2mm 3mm;
+}
+
+.learning-grid > div, .study-grid > div, .bugs-grid > div {
+  border-left: 1.2pt solid #555;
+  padding-left: 1.2mm;
+  font-size: 7.05pt;
+}
+
+.learning code, .study code, .checklist code, .bugs code {
+  font-family: "Courier New", Consolas, monospace;
+  font-size: .96em;
+}
+
+.checklist pre {
+  margin: 0;
+  border-left: 1.3pt solid #444;
+  padding: .9mm 1.1mm;
+  background: var(--soft);
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 7.2pt;
+  line-height: 1.2;
+}
+
+.group {
+  margin-top: 3mm;
+}
+
+.group > h1 {
+  border-top: 1.25pt solid var(--ink);
+  border-bottom: .55pt solid var(--line);
+  padding: 1mm 0;
+  margin: 2mm 0 1.6mm;
+  font-size: 11pt;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.solution {
+  display: grid;
+  grid-template-columns: 32% 1fr;
+  gap: 3.2mm;
+  border-top: .55pt solid var(--line);
+  padding: 1.7mm 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.notes {
+  min-width: 0;
+}
+
+.problem-head {
+  border-left: 2.5pt solid #222;
+  padding-left: 1.2mm;
+  margin-bottom: 1.2mm;
+}
+
+.problem-head h2 {
+  font-size: 9.4pt;
+  line-height: 1.1;
+}
+
+.problem-head span {
+  display: inline-block;
+  margin-top: .5mm;
+  padding: .15mm .65mm;
+  border: .35pt solid #777;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 5.95pt;
+}
+
+.note-row {
+  display: grid;
+  grid-template-columns: 21mm minmax(0, 1fr);
+  gap: 1mm;
+  padding: .55mm 0;
+  border-top: .25pt solid #d0d0d0;
+  font-size: 6.55pt;
+}
+
+.note-row:first-of-type { border-top: 0; }
+
+.label {
+  font-weight: 700;
+}
+
+.value {
+  min-width: 0;
+}
+
+.code-side {
+  min-width: 0;
+}
+
+.code-label {
+  border-bottom: .45pt solid var(--line);
+  padding-bottom: .65mm;
+  margin-bottom: .8mm;
+  font-size: 7.05pt;
+  font-weight: 700;
+}
+
+pre {
+  margin: 0;
+  padding: 1.1mm 1.25mm;
+  border: .45pt solid #bdbdbd;
+  background: #fafafa;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 5.75pt;
+  line-height: 1.14;
+}
+
+.bugs {
+  margin-top: 3mm;
+}
+
+@media screen {
+  body {
+    max-width: 330mm;
+    margin: auto;
+    padding: 7mm;
+  }
+}
+
+@media print {
+  body { padding: 0; }
+  .solution { break-inside: avoid-page; page-break-inside: avoid; }
+}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>CSES Dynamic Programming — Complete Java 17 Code + FAANG DP</h1>
+  <p>Printable A4 landscape reference. CSES solutions are standalone <code>public class Main</code> submissions. FAANG add-ons are LeetCode-ready <code>class Solution</code> implementations. MOD = 1_000_000_007L unless stated otherwise.</p>
+</header>
+
+<section class="learning">
+  <h2>DP Learning Pointers — Learn These Before Memorising Any Code</h2>
+  <div class="learning-grid">
+    <div><b>1. State first.</b><br><code>dp[...] = answer for ___ using / ending at ___.</code> If you cannot say this exactly, do not code.</div>
+    <div><b>2. Find the final decision.</b><br>Ask: “What was the last move, last item, first cut, or last operation that reaches this state?”</div>
+    <div><b>3. Identify the operation.</b><br>Count → add; minimum → <code>min</code>; maximum → <code>max</code>; feasibility → boolean OR; games → my gain minus opponent answer.</div>
+    <div><b>4. Loop order changes the problem.</b><br><code>sum outer = ordered</code>; <code>coin outer + forward = unlimited combinations</code>; <code>item outer + backward = 0/1</code>.</div>
+    <div><b>5. Base cases are meaning.</b><br>Decide what empty prefix, sum 0, one cell, one interval, or no selected item should mean before transition.</div>
+    <div><b>6. Compress only after 2D is clear.</b><br>Previous-row dependency → <code>prev/cur</code>. Backward 1D loop protects 0/1 states. Forward loop permits reuse.</div>
+    <div><b>7. String template.</b><br>Equal characters usually use diagonal. Unequal characters either skip one side or try insert/delete/replace.</div>
+    <div><b>8. Interval template.</b><br><code>dp[l][r]</code> solves a range. Choose a first cut / endpoint / last operation that makes subproblems independent.</div>
+    <div><b>9. Advanced only after basics.</b><br>Subset DP, profile DP, digit DP, Fenwick DP and segment-tree DP are not “new DP”; they are state design plus data structures.</div>
+  </div>
+</section>
+
+<section class="study">
+  <h2>Fast DP Completion Order</h2>
+  <div class="study-grid">
+    <div><b>Day 1 — 1D basics</b><br>Dice, Minimizing Coins, Coin I, Coin II, Removing Digits, Decode Ways.</div>
+    <div><b>Day 2 — 0/1 subset</b><br>Book Shop, Money Sums, Two Sets II, Partition Equal Subset Sum, Target Sum.</div>
+    <div><b>Day 3 — Grid / local state</b><br>Grid Paths I, Array Description, Maximal Square, Minimal Grid Path.</div>
+    <div><b>Day 4 — Strings</b><br>Edit Distance, LCS, Word Break, Distinct Subsequences.</div>
+    <div><b>Day 5 — Intervals</b><br>Rectangle Cutting, Removal Game, LPS, Burst Balloons.</div>
+    <div><b>Day 6 — Optimisation / sequences</b><br>House Robber, Stock Cooldown, LIS, Projects.</div>
+    <div><b>Day 7+ — Advanced</b><br>Elevator Rides, Counting Tilings, Counting Numbers, Increasing Subsequence II, Mountain Range.</div>
+  </div>
+</section>
+
+<section class="checklist">
+  <h2>Mandatory Before You Code</h2>
+  <pre><code>1. dp state:
+2. What does one transition term mean?
+3. Base case:
+4. Count / min / max / boolean / game difference?
+5. Can a choice repeat?
+6. Loop direction — and why?
+7. Complexity from constraints:</code></pre>
+</section>
+
+<section class="group"><h1>1D Counting / Minimum DP</h1>
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Dice Combinations</h2>
+      <span>count · ordered · unlimited</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count ordered sequences of fixed moves that reach an exact total.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n) time, O(n) space. 1D native; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[s] = number of ordered dice-roll sequences with sum exactly s.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">dp[s] = Σ dp[s-d] for d in 1..6 and d≤s. Base: dp[0]=1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Sum forward, then face. Rolls can repeat; sum outer makes order matter.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Use long before modulo. Memory hook: “sum outer = ordered sequences.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Coin Combinations I: same sum-outer counting structure; dice values are fixed 1..6.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“For each total, choose the final dice face and add ways for the remaining total.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+
+        for (int sum = 1; sum &lt;= n; sum++) {
+            for (int face = 1; face &lt;= 6 &amp;&amp; face &lt;= sum; face++) {
+                dp[sum] += dp[sum - face];
+                if (dp[sum] &gt;= MOD) dp[sum] -= MOD;
+            }
+        }
+        System.out.println(dp[n]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Minimizing Coins</h2>
+      <span>min · unlimited coin change</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Minimum number of reusable choices needed to make an exact target sum.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·x) time, O(x) space. 1D native; no modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[s] = minimum coins needed to make exact sum s; INF means impossible.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">dp[s] = min(dp[s], dp[s-c]+1) for every coin c≤s. Base: dp[0]=0.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Sum forward. A state dp[s-c] may already use coin c, so reuse is allowed.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Do not compute INF+1. Memory hook: “INF means impossible, not expensive.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Coin Combinations I uses the same last-coin idea but adds counts; this minimizes.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I try every legal last coin and keep the smallest answer for the remainder.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        int x = fs.nextInt();
+
+        int[] coins = new int[n];
+        for (int i = 0; i &lt; n; i++) coins[i] = fs.nextInt();
+
+        int INF = 1_000_000_000;
+        int[] dp = new int[x + 1];
+        Arrays.fill(dp, INF);
+        dp[0] = 0;
+
+        for (int sum = 1; sum &lt;= x; sum++) {
+            for (int coin : coins) {
+                if (coin &lt;= sum &amp;&amp; dp[sum - coin] != INF) {
+                    dp[sum] = Math.min(dp[sum], dp[sum - coin] + 1);
+                }
+            }
+        }
+
+        System.out.println(dp[x] == INF ? -1 : dp[x]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Coin Combinations I</h2>
+      <span>count · ordered · unlimited</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count reusable coin sequences where different orders are different answers.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·x) time, O(x) space. 1D optimal; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[s] = number of ordered coin sequences summing exactly to s.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">dp[s] += dp[s-c] for every c≤s; append c as the final coin. Base: dp[0]=1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Sum outer, coin inner. That enumerates every choice of final coin, so order matters.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Never swap the loops accidentally. Memory hook: “sum outer = permutations.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Coin Combinations II has the same symbols but coin outer; it counts unordered combinations.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I append each possible final coin to a sequence for the remaining sum.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        int x = fs.nextInt();
+
+        int[] coins = new int[n];
+        for (int i = 0; i &lt; n; i++) coins[i] = fs.nextInt();
+
+        long[] dp = new long[x + 1];
+        dp[0] = 1;
+
+        for (int sum = 1; sum &lt;= x; sum++) {
+            for (int coin : coins) {
+                if (coin &lt;= sum) {
+                    dp[sum] += dp[sum - coin];
+                    if (dp[sum] &gt;= MOD) dp[sum] -= MOD;
+                }
+            }
+        }
+
+        System.out.println(dp[x]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Coin Combinations II</h2>
+      <span>count · unordered · unlimited</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count coin multisets: different orders of the same selected coins are one answer.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·x) time, O(x) space. 1D optimal; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">After processed coin types, dp[s] = number of combinations making sum s.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">For current coin c: dp[s] += dp[s-c]. Base: dp[0]=1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Coin outer, sum forward. Forward permits reuse; fixed type order removes permutations.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “coin outer = combinations; forward = unlimited.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Coin I is sum outer and ordered; Coin II is coin outer and unordered. Both reuse coins.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I process denominations in fixed order so every multiset has one construction order.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        int x = fs.nextInt();
+
+        int[] coins = new int[n];
+        for (int i = 0; i &lt; n; i++) coins[i] = fs.nextInt();
+
+        long[] dp = new long[x + 1];
+        dp[0] = 1;
+
+        for (int coin : coins) {
+            for (int sum = coin; sum &lt;= x; sum++) {
+                dp[sum] += dp[sum - coin];
+                if (dp[sum] &gt;= MOD) dp[sum] -= MOD;
+            }
+        }
+
+        System.out.println(dp[x]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Removing Digits</h2>
+      <span>min · state-dependent moves</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Minimum moves to reach zero when valid subtractions are the nonzero digits of the current number.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·digits(n)) time, O(n) space. 1D native.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[x] = minimum moves needed to reduce integer x to zero.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">dp[x] = 1 + min(dp[x-d]) over each nonzero digit d occurring in x. Base: dp[0]=0.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Process x from 1 to n. Each transition goes to a smaller number; no fixed item-reuse rule.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Ignore digit 0. Memory hook: “read digits from current x, not original n.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Minimizing Coins also chooses a last move, but its coin set is global; here it changes with x.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“Every state points only to smaller numbers, so I test each nonzero digit as the next subtraction.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        int INF = 1_000_000_000;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, INF);
+        dp[0] = 0;
+
+        for (int x = 1; x &lt;= n; x++) {
+            for (int value = x; value &gt; 0; value /= 10) {
+                int digit = value % 10;
+                if (digit != 0) {
+                    dp[x] = Math.min(dp[x], dp[x - digit] + 1);
+                }
+            }
+        }
+
+        System.out.println(dp[n]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Counting Towers</h2>
+      <span>count · two boundary states</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Width-2 construction where only the top boundary profile affects future extensions.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(maxN) preprocessing time, O(maxN) space. Rolling O(1) is possible; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">a[i], b[i] = number of towers of height i ending in the two canonical width-2 boundary forms.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">a[i]=4a[i-1]+b[i-1]; b[i]=a[i-1]+2b[i-1]. Base: a[1]=b[1]=1. Answer a[n]+b[n].</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Height forward. Each level depends only on the previous frontier state.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Use long before modulo. Memory hook: “small fixed width → classify frontier shapes.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Counting Tilings uses the same frontier principle but needs 2^width masks; width 2 collapses to two states.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“The full past compresses into the exposed top shape, so two states are enough.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int t = fs.nextInt();
+
+        int[] query = new int[t];
+        int maxN = 0;
+        for (int i = 0; i &lt; t; i++) {
+            query[i] = fs.nextInt();
+            maxN = Math.max(maxN, query[i]);
+        }
+
+        long[] a = new long[maxN + 1];
+        long[] b = new long[maxN + 1];
+        if (maxN &gt;= 1) a[1] = b[1] = 1;
+
+        for (int i = 2; i &lt;= maxN; i++) {
+            a[i] = (4L * a[i - 1] + b[i - 1]) % MOD;
+            b[i] = (a[i - 1] + 2L * b[i - 1]) % MOD;
+        }
+
+        StringBuilder out = new StringBuilder();
+        for (int n : query) {
+            out.append((a[n] + b[n]) % MOD).append(&#x27;\n&#x27;);
+        }
+        System.out.print(out);
+    }
+}</code></pre>
+  </section>
+</article>
+</section><section class="group"><h1>Grid / Local-Constraint DP</h1>
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Grid Paths I</h2>
+      <span>grid count · obstacles</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count monotone right/down paths through a grid with blocked cells.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n²) time, O(n) space by row compression; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">After processing row i, dp[j] = number of paths to cell (i,j).</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Open cell: dp[j] = dp[j] (from up) + dp[j-1] (from left). Blocked: dp[j]=0. Base: dp[0]=1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Rows top-down; columns left-right. Current dp[j] is up, updated dp[j-1] is left.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">A blocked cell must erase its old from-up value. Memory hook: “obstacle = zero state.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Minimal Grid Path has same geometry but retains tied lexicographic frontier states instead of adding counts.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“Every path into a cell arrives from above or left, so one row is sufficient.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        char[][] grid = new char[n][];
+        for (int i = 0; i &lt; n; i++) grid[i] = fs.next().toCharArray();
+
+        long[] dp = new long[n];
+        dp[0] = 1;
+
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (grid[i][j] == &#x27;*&#x27;) {
+                    dp[j] = 0;
+                } else if (j &gt; 0) {
+                    dp[j] += dp[j - 1];
+                    if (dp[j] &gt;= MOD) dp[j] -= MOD;
+                }
+            }
+        }
+
+        System.out.println(dp[n - 1]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Array Description</h2>
+      <span>count · adjacent values</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count arrays with |a[i]-a[i-1]|≤1 when some positions are fixed and others are zero.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·m) time, O(m) space using previous/current rows; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">prev[v] = ways to fill processed prefix ending with value v, where 1≤v≤m.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">If v is allowed at i: cur[v] = prev[v-1]+prev[v]+prev[v+1]. Base: each allowed first value has one way.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Process positions left-to-right. Use two rows because every transition must read the untouched previous position.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Pad indexes 0 and m+1 with zero. Memory hook: “local constraint → nearby previous states only.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Grid Paths uses geometric predecessors; Array Description uses value neighbours v-1, v and v+1.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“The next choice only cares about the last value, so the entire prefix compresses to one endpoint.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        int m = fs.nextInt();
+
+        int[] a = new int[n];
+        for (int i = 0; i &lt; n; i++) a[i] = fs.nextInt();
+
+        long[] prev = new long[m + 2];
+        long[] cur = new long[m + 2];
+
+        for (int v = 1; v &lt;= m; v++) {
+            if (a[0] == 0 || a[0] == v) prev[v] = 1;
+        }
+
+        for (int i = 1; i &lt; n; i++) {
+            Arrays.fill(cur, 0);
+            for (int v = 1; v &lt;= m; v++) {
+                if (a[i] == 0 || a[i] == v) {
+                    cur[v] = (prev[v - 1] + prev[v] + prev[v + 1]) % MOD;
+                }
+            }
+            long[] temp = prev;
+            prev = cur;
+            cur = temp;
+        }
+
+        long answer = 0;
+        for (int v = 1; v &lt;= m; v++) {
+            answer += prev[v];
+            if (answer &gt;= MOD) answer -= MOD;
+        }
+        System.out.println(answer);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Minimal Grid Path</h2>
+      <span>lexicographic · frontier DP</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Find the lexicographically smallest right/down path string; simple greedy fails when the best next letter ties.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n²) time, O(n²) grid storage plus O(n) frontier. No scalar 1D DP.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">Frontier[d] = every cell on diagonal i+j=d that is reachable by the lexicographically minimum prefix of length d+1.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">From all frontier cells, choose smallest right/down neighbour character. Next frontier contains all neighbours with that character. Base: {(0,0)}.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Move diagonal by diagonal. Keep all tied best cells because any one could enable a better later suffix.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Never retain only one tie. Memory hook: “equal best letter → keep every future possibility.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Grid Paths I adds number of routes; this minimizes the path label and must preserve all equally best prefixes.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“At each diagonal I keep every cell producing the best prefix, then extend only with the smallest available letter.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int n;
+    static char[][] grid;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        n = fs.nextInt();
+
+        grid = new char[n][];
+        for (int i = 0; i &lt; n; i++) grid[i] = fs.next().toCharArray();
+
+        int[] cur = new int[n];
+        int[] next = new int[n];
+        int[] seen = new int[n];
+        Arrays.fill(seen, -1);
+
+        int size = 1;
+        cur[0] = 0; // row 0; column is determined by the diagonal
+        StringBuilder answer = new StringBuilder();
+        answer.append(grid[0][0]);
+
+        for (int diagonal = 1; diagonal &lt;= 2 * n - 2; diagonal++) {
+            char best = &#x27;[&#x27;; // one character after &#x27;Z&#x27;
+
+            for (int k = 0; k &lt; size; k++) {
+                int row = cur[k];
+                int col = diagonal - 1 - row;
+
+                if (row + 1 &lt; n) best = (char) Math.min(best, grid[row + 1][col]);
+                if (col + 1 &lt; n) best = (char) Math.min(best, grid[row][col + 1]);
+            }
+
+            int nextSize = 0;
+            for (int k = 0; k &lt; size; k++) {
+                int row = cur[k];
+                int col = diagonal - 1 - row;
+
+                int downRow = row + 1;
+                if (downRow &lt; n &amp;&amp; grid[downRow][col] == best &amp;&amp; seen[downRow] != diagonal) {
+                    seen[downRow] = diagonal;
+                    next[nextSize++] = downRow;
+                }
+
+                if (col + 1 &lt; n &amp;&amp; grid[row][col + 1] == best &amp;&amp; seen[row] != diagonal) {
+                    seen[row] = diagonal;
+                    next[nextSize++] = row;
+                }
+            }
+
+            answer.append(best);
+            int[] temp = cur;
+            cur = next;
+            next = temp;
+            size = nextSize;
+        }
+
+        System.out.println(answer);
+    }
+}</code></pre>
+  </section>
+</article>
+</section><section class="group"><h1>Knapsack / Subset / Bitmask DP</h1>
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Book Shop</h2>
+      <span>0/1 knapsack · maximize</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Choose each book at most once under budget to maximize total pages.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·x) time, O(x) space. 1D compression is optimal.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[b] = maximum pages obtainable with total price at most b after processed books.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">For book (price,pages): dp[b] = max(dp[b], dp[b-price]+pages). Base: all zero.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Book outer; budget backward. Backward prevents using the same book again.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “backward loop = use each item once.” Forward would make it unlimited.</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Coin II also has item outer but loops forward because coins are unlimited; Book Shop is 0/1 maximization.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I update budget backward so this book cannot appear twice in the same transition chain.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        int budget = fs.nextInt();
+
+        int[] price = new int[n];
+        int[] pages = new int[n];
+
+        for (int i = 0; i &lt; n; i++) price[i] = fs.nextInt();
+        for (int i = 0; i &lt; n; i++) pages[i] = fs.nextInt();
+
+        int[] dp = new int[budget + 1];
+
+        for (int i = 0; i &lt; n; i++) {
+            for (int b = budget; b &gt;= price[i]; b--) {
+                dp[b] = Math.max(dp[b], dp[b - price[i]] + pages[i]);
+            }
+        }
+
+        System.out.println(dp[budget]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Money Sums</h2>
+      <span>0/1 subset feasibility</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Find every distinct sum reachable by selecting each coin zero or one time.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·SUM) time, O(SUM) space. 1D boolean DP.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">can[s] = whether sum s is reachable from processed coins.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">For current coin x: can[s] |= can[s-x]. Base: can[0]=true.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Coin outer, sums backward. Backward prevents using current coin multiple times.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Do not output 0. Memory hook: “backward boolean DP = take or skip once.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Two Sets II has the same 0/1 subset skeleton but counts only target subsets modulo MOD.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“A coin either keeps reachable sums or shifts each already reachable sum by its value once.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        int[] coins = new int[n];
+        int total = 0;
+        for (int i = 0; i &lt; n; i++) {
+            coins[i] = fs.nextInt();
+            total += coins[i];
+        }
+
+        boolean[] can = new boolean[total + 1];
+        can[0] = true;
+
+        for (int coin : coins) {
+            for (int sum = total; sum &gt;= coin; sum--) {
+                can[sum] |= can[sum - coin];
+            }
+        }
+
+        int count = 0;
+        for (int sum = 1; sum &lt;= total; sum++) if (can[sum]) count++;
+
+        StringBuilder out = new StringBuilder();
+        out.append(count).append(&#x27;\n&#x27;);
+        for (int sum = 1; sum &lt;= total; sum++) {
+            if (can[sum]) out.append(sum).append(&#x27; &#x27;);
+        }
+        out.append(&#x27;\n&#x27;);
+        System.out.print(out);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Two Sets II</h2>
+      <span>0/1 count · partition</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count equal-sum partitions of {1..n} without double-counting complementary subsets.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·T) time, O(T) space, where T=n(n+1)/4. 1D possible; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[s] = number of subsets of processed values that sum to s.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">If total is odd, answer 0. Else dp[s]+=dp[s-v]. Base dp[0]=1. Process v=1..n-1 to remove complement symmetry.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Value outer; sum backward. Each number is 0/1. Excluding n counts each partition once.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “skip n instead of dividing by 2.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Money Sums uses same backward 0/1 DP but stores boolean reachability for all totals rather than count for one target.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I reduce partitioning to subset sum and force one side not to contain n.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        long total = 1L * n * (n + 1) / 2;
+        if ((total &amp; 1) == 1) {
+            System.out.println(0);
+            return;
+        }
+
+        int target = (int) (total / 2);
+        long[] dp = new long[target + 1];
+        dp[0] = 1;
+
+        // Excluding n removes the subset/complement duplicate.
+        for (int value = 1; value &lt; n; value++) {
+            for (int sum = target; sum &gt;= value; sum--) {
+                dp[sum] += dp[sum - value];
+                if (dp[sum] &gt;= MOD) dp[sum] -= MOD;
+            }
+        }
+
+        System.out.println(dp[target]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Elevator Rides</h2>
+      <span>subset DP · lexicographic state</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Partition at most 20 people into the minimum number of capacity-limited rides.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·2^n) time, O(2^n) space. Mask DP is optimal for n≤20.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">For mask: (rides[mask], lastWeight[mask]) is minimum rides; among ties, minimum current last-ride weight.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Remove person p. Append if lastWeight+w[p]≤x; otherwise start a new ride. Keep lexicographic minimum pair. Base: (1,0) for empty mask.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Process masks in increasing numeric order; a mask represents people used exactly once.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Always tie-break on lower current ride weight. Memory hook: “min rides first, lighter open ride second.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Book Shop tracks total cost only; this problem needs the exact subset of people plus the best unfinished ride.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“For each subset I store the fewest rides and the lightest possible open last ride.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        long limit = fs.nextLong();
+
+        long[] weight = new long[n];
+        for (int i = 0; i &lt; n; i++) weight[i] = fs.nextLong();
+
+        int totalMasks = 1 &lt;&lt; n;
+        int[] rides = new int[totalMasks];
+        long[] lastWeight = new long[totalMasks];
+        Arrays.fill(rides, n + 1);
+
+        rides[0] = 1;
+        lastWeight[0] = 0;
+
+        for (int mask = 1; mask &lt; totalMasks; mask++) {
+            for (int person = 0; person &lt; n; person++) {
+                if ((mask &amp; (1 &lt;&lt; person)) == 0) continue;
+
+                int previousMask = mask ^ (1 &lt;&lt; person);
+                int candidateRides = rides[previousMask];
+                long candidateLastWeight = lastWeight[previousMask] + weight[person];
+
+                if (candidateLastWeight &gt; limit) {
+                    candidateRides++;
+                    candidateLastWeight = weight[person];
+                }
+
+                if (candidateRides &lt; rides[mask] ||
+                    (candidateRides == rides[mask] &amp;&amp; candidateLastWeight &lt; lastWeight[mask])) {
+                    rides[mask] = candidateRides;
+                    lastWeight[mask] = candidateLastWeight;
+                }
+            }
+        }
+
+        System.out.println(rides[totalMasks - 1]);
+    }
+}</code></pre>
+  </section>
+</article>
+</section><section class="group"><h1>String / Interval DP</h1>
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Edit Distance</h2>
+      <span>string prefix DP · min</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Minimum insertions, deletions and replacements to transform one string into another.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·m) time, O(m) space with rolling rows.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[i][j] = minimum operations converting first i characters of a into first j characters of b.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Match: diagonal. Mismatch: 1+min(up delete, left insert, diagonal replace). Bases dp[i][0]=i, dp[0][j]=j.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Prefix rows forward. prev[j] is up, cur[j-1] is left, prev[j-1] is diagonal.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “up delete, left insert, diagonal replace.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">LCS also compares two prefixes; it maximizes kept matches, while Edit Distance minimizes paid operations.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“At a mismatch I try the three possible last edits.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        String a = fs.next();
+        String b = fs.next();
+
+        int n = a.length();
+        int m = b.length();
+
+        int[] prev = new int[m + 1];
+        int[] cur = new int[m + 1];
+        for (int j = 0; j &lt;= m; j++) prev[j] = j;
+
+        for (int i = 1; i &lt;= n; i++) {
+            cur[0] = i;
+            for (int j = 1; j &lt;= m; j++) {
+                if (a.charAt(i - 1) == b.charAt(j - 1)) {
+                    cur[j] = prev[j - 1];
+                } else {
+                    cur[j] = 1 + Math.min(prev[j - 1], Math.min(prev[j], cur[j - 1]));
+                }
+            }
+            int[] temp = prev;
+            prev = cur;
+            cur = temp;
+        }
+
+        System.out.println(prev[m]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Longest Common Subsequence</h2>
+      <span>array prefix DP · reconstruction</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Find and print a longest common subsequence of two integer arrays; gaps are allowed.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·m) time, O(n·m) space because reconstruction needs the table.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[i][j] = LCS length of first i values of a and first j values of b.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Equal values: 1+dp[i-1][j-1]. Else: max(dp[i-1][j], dp[i][j-1]). Base row/column is zero.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Fill prefixes forward; reconstruct from (n,m) backward toward a larger neighbour.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Subsequence is not substring. Memory hook: “equal → diagonal +1; mismatch → skip one side.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Edit Distance has the same prefix grid, but takes a minimum over paid edits rather than maximum matching length.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“When values match I keep both; otherwise I discard one end of a prefix and retain the better answer.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        int m = fs.nextInt();
+
+        int[] a = new int[n];
+        int[] b = new int[m];
+        for (int i = 0; i &lt; n; i++) a[i] = fs.nextInt();
+        for (int j = 0; j &lt; m; j++) b[j] = fs.nextInt();
+
+        int[][] dp = new int[n + 1][m + 1];
+
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j &lt;= m; j++) {
+                if (a[i - 1] == b[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        int[] lcs = new int[dp[n][m]];
+        int pos = lcs.length - 1;
+        int i = n, j = m;
+
+        while (i &gt; 0 &amp;&amp; j &gt; 0) {
+            if (a[i - 1] == b[j - 1]) {
+                lcs[pos--] = a[i - 1];
+                i--;
+                j--;
+            } else if (dp[i - 1][j] &gt;= dp[i][j - 1]) {
+                i--;
+            } else {
+                j--;
+            }
+        }
+
+        StringBuilder out = new StringBuilder();
+        out.append(lcs.length).append(&#x27;\n&#x27;);
+        for (int value : lcs) out.append(value).append(&#x27; &#x27;);
+        out.append(&#x27;\n&#x27;);
+        System.out.print(out);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Rectangle Cutting</h2>
+      <span>2D partition DP · min</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Minimum cuts to partition an a×b rectangle into squares; each cut creates two independent rectangles.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(a·b·(a+b)) time, O(a·b) space. No useful 1D optimization.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[h][w] = minimum cuts needed to split an h×w rectangle completely into squares.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">If h==w, 0. Otherwise try every horizontal and vertical first cut: 1+answer(piece1)+answer(piece2).</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Increase dimensions; all child rectangles are smaller than their parent.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">A square needs zero cuts. Memory hook: “first cut = 1 + two independent answers.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Removal Game also uses subproblems over ranges, but its transition subtracts opponent advantage rather than adding two pieces.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I enumerate every possible first cut and combine the optimal answers for the two resulting rectangles.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int a = fs.nextInt();
+        int b = fs.nextInt();
+
+        int[][] dp = new int[a + 1][b + 1];
+        int INF = 1_000_000_000;
+
+        for (int h = 1; h &lt;= a; h++) {
+            for (int w = 1; w &lt;= b; w++) {
+                if (h == w) {
+                    dp[h][w] = 0;
+                    continue;
+                }
+
+                dp[h][w] = INF;
+
+                for (int cut = 1; cut &lt; h; cut++) {
+                    dp[h][w] = Math.min(dp[h][w],
+                        1 + dp[cut][w] + dp[h - cut][w]);
+                }
+
+                for (int cut = 1; cut &lt; w; cut++) {
+                    dp[h][w] = Math.min(dp[h][w],
+                        1 + dp[h][cut] + dp[h][w - cut]);
+                }
+            }
+        }
+
+        System.out.println(dp[a][b]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Removal Game</h2>
+      <span>interval game · score difference</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Two-player optimal game where either endpoint of the remaining interval may be removed.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n²) time, O(n) space with interval compression. Use long.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[l][r] = maximum currentPlayerScore − otherPlayerScore obtainable from interval [l,r].</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">dp[l][r] = max(a[l]-dp[l+1][r], a[r]-dp[l][r-1]). Base: dp[i][i]=a[i]. First score=(sum+dp[0][n-1])/2.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Increase interval length. In compressed dp, l increasing keeps dp[l+1] from the previous length.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Store score difference, not raw first-player score. Memory hook: “my gain − opponent’s best reply.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Rectangle Cutting adds independent child answers; games subtract the opponent’s best remaining advantage.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“The difference state automatically models optimal play after I choose either endpoint.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        long[] a = new long[n];
+        long sum = 0;
+        for (int i = 0; i &lt; n; i++) {
+            a[i] = fs.nextLong();
+            sum += a[i];
+        }
+
+        long[] dp = a.clone();
+
+        for (int len = 2; len &lt;= n; len++) {
+            for (int left = 0; left + len &lt;= n; left++) {
+                int right = left + len - 1;
+                dp[left] = Math.max(
+                    a[left] - dp[left + 1],
+                    a[right] - dp[left]
+                );
+            }
+        }
+
+        long difference = dp[0];
+        long firstPlayer = (sum + difference) / 2;
+        System.out.println(firstPlayer);
+    }
+}</code></pre>
+  </section>
+</article>
+</section><section class="group"><h1>Advanced CSES DP</h1>
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Mountain Range</h2>
+      <span>advanced · monotonic stack + segment tree</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Longest descending route where a jump from a must have every crossed mountain strictly lower than a.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n log n) time, O(n) space: nearest greater-or-equal blockers + offline range-max DP.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[i] = maximum mountains visitable when the route starts at i.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Let L[i],R[i] be nearest indices with height ≥ h[i]. Then dp[i]=1+max(dp[j]) for j in [L[i]+1,R[i]-1] with h[j]&lt;h[i]. Process equal heights as one batch.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Build blockers with monotonic stacks. Process heights ascending; query the segment tree before updating all mountains of equal height.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Use &gt;= blockers: equal-height mountains block visibility. Batch equal heights so they do not transition into each other.</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">LIS also transitions to smaller values; Mountain Range restricts destination indices to the interval between nearest taller/equal blockers.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“Nearest higher blockers define the visible interval; a segment tree gives the best lower route inside it.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final class SegmentTree {
+        int size;
+        int[] tree;
+
+        SegmentTree(int n) {
+            size = 1;
+            while (size &lt; n) size &lt;&lt;= 1;
+            tree = new int[size &lt;&lt; 1];
+        }
+
+        void update(int position, int value) {
+            int node = position + size;
+            tree[node] = Math.max(tree[node], value);
+            for (node &gt;&gt;= 1; node &gt; 0; node &gt;&gt;= 1) {
+                tree[node] = Math.max(tree[node &lt;&lt; 1], tree[node &lt;&lt; 1 | 1]);
+            }
+        }
+
+        int query(int left, int right) {
+            if (left &gt; right) return 0;
+            int result = 0;
+            for (left += size, right += size; left &lt;= right; left &gt;&gt;= 1, right &gt;&gt;= 1) {
+                if ((left &amp; 1) == 1) result = Math.max(result, tree[left++]);
+                if ((right &amp; 1) == 0) result = Math.max(result, tree[right--]);
+            }
+            return result;
+        }
+    }
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        int[] h = new int[n];
+        for (int i = 0; i &lt; n; i++) h[i] = fs.nextInt();
+
+        int[] left = new int[n];
+        int[] right = new int[n];
+        int[] stack = new int[n];
+        int top = 0;
+
+        // Nearest previous height &gt;= current height.
+        for (int i = 0; i &lt; n; i++) {
+            while (top &gt; 0 &amp;&amp; h[stack[top - 1]] &lt; h[i]) top--;
+            left[i] = top == 0 ? -1 : stack[top - 1];
+            stack[top++] = i;
+        }
+
+        // Nearest next height &gt;= current height.
+        top = 0;
+        for (int i = n - 1; i &gt;= 0; i--) {
+            while (top &gt; 0 &amp;&amp; h[stack[top - 1]] &lt; h[i]) top--;
+            right[i] = top == 0 ? n : stack[top - 1];
+            stack[top++] = i;
+        }
+
+        // Sort by height ascending; lower mountains must be ready before higher mountains.
+        long[] order = new long[n];
+        for (int i = 0; i &lt; n; i++) {
+            order[i] = ((long) h[i] &lt;&lt; 32) | (i &amp; 0xffffffffL);
+        }
+        Arrays.sort(order);
+
+        SegmentTree segmentTree = new SegmentTree(n);
+        int[] dp = new int[n];
+        int answer = 1;
+
+        for (int p = 0; p &lt; n; ) {
+            int q = p;
+            long height = order[p] &gt;&gt;&gt; 32;
+            while (q &lt; n &amp;&amp; (order[q] &gt;&gt;&gt; 32) == height) q++;
+
+            // Query before update: equal heights are not valid destinations.
+            for (int t = p; t &lt; q; t++) {
+                int index = (int) order[t];
+                dp[index] = 1 + segmentTree.query(left[index] + 1, right[index] - 1);
+                answer = Math.max(answer, dp[index]);
+            }
+
+            for (int t = p; t &lt; q; t++) {
+                int index = (int) order[t];
+                segmentTree.update(index, dp[index]);
+            }
+
+            p = q;
+        }
+
+        System.out.println(answer);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Increasing Subsequence</h2>
+      <span>LIS · patience sorting</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Find length of the longest strictly increasing subsequence in a large array.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n log n) time, O(n) space. This is the standard optimal LIS method.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">tail[len-1] = smallest possible ending value among increasing subsequences of length len seen so far.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">For x, replace first tail[pos]≥x with x; append x if no such position exists.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Scan left-to-right. Each index is considered once. lower_bound semantics enforce strict increase.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Use first ≥ x, not first &gt; x. Memory hook: “smaller tail leaves more extension room.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Increasing Subsequence II counts all increasing subsequences with Fenwick sums; LIS stores only the best tail per length.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“For each length I keep the smallest possible ending value because it is always easiest to extend.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        int[] tail = new int[n];
+        int length = 0;
+
+        for (int i = 0; i &lt; n; i++) {
+            int x = fs.nextInt();
+
+            int low = 0, high = length;
+            while (low &lt; high) {
+                int mid = (low + high) &gt;&gt;&gt; 1;
+                if (tail[mid] &gt;= x) high = mid;
+                else low = mid + 1;
+            }
+
+            tail[low] = x;
+            if (low == length) length++;
+        }
+
+        System.out.println(length);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Projects</h2>
+      <span>weighted interval scheduling</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Maximize reward from non-overlapping projects with inclusive start/end days.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n log n) time, O(n) space from sorting by end and binary search.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">After sorting by ending day, dp[i] = maximum reward using the first i projects.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">For project i, find latest j&lt;i with end[j]&lt;start[i]. dp[i+1]=max(dp[i], reward[i]+dp[j+1]).</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Sort by end day, process left-to-right. A project is taken or skipped once.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Compatibility is end &lt; start, not ≤, because dates are inclusive. Memory hook: “sort by finish, jump to compatible.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Book Shop is take/skip over a numeric budget; Projects is take/skip over time and jumps to a compatible prefix.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“For each project I either skip it or take it plus the best schedule that ends before it starts.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final class Project {
+        int start;
+        int end;
+        long reward;
+
+        Project(int start, int end, long reward) {
+            this.start = start;
+            this.end = end;
+            this.reward = reward;
+        }
+    }
+
+    static int lastCompatible(Project[] projects, int uptoExclusive, int start) {
+        int low = 0, high = uptoExclusive - 1, answer = -1;
+
+        while (low &lt;= high) {
+            int mid = (low + high) &gt;&gt;&gt; 1;
+            if (projects[mid].end &lt; start) {
+                answer = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return answer;
+    }
+
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        Project[] projects = new Project[n];
+        for (int i = 0; i &lt; n; i++) {
+            int start = fs.nextInt();
+            int end = fs.nextInt();
+            long reward = fs.nextLong();
+            projects[i] = new Project(start, end, reward);
+        }
+
+        Arrays.sort(projects, Comparator.comparingInt(project -&gt; project.end));
+
+        long[] dp = new long[n + 1];
+
+        for (int i = 0; i &lt; n; i++) {
+            int previous = lastCompatible(projects, i, projects[i].start);
+            long take = projects[i].reward + dp[previous + 1];
+            dp[i + 1] = Math.max(dp[i], take);
+        }
+
+        System.out.println(dp[n]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Counting Tilings</h2>
+      <span>profile DP · bitmask frontier</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count domino tilings when one grid dimension is small and the frontier occupancy is all that matters.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(m·3^n) time, O(2^n) space. Use the smaller dimension as the bitmask width.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[mask] = ways before a column where mask bits are cells already occupied by horizontal dominoes from the previous column.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Fill the first empty row: vertical tile fills two current cells; horizontal tile fills current cell and sets nextMask bit. Base dp[0]=1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Process columns left-to-right. Recursively fill rows within current mask.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Mask means occupied from the left. Memory hook: “horizontal placement sets a bit in nextMask.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Counting Towers is also frontier DP, but width 2 has only two canonical profiles instead of 2^n masks.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I sweep columns and remember only cells pre-filled by dominoes crossing from the left.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+    static int rows;
+    static long[] nextDp;
+
+    static void fillColumn(int row, int mask, int nextMask, long ways) {
+        if (row == rows) {
+            nextDp[nextMask] += ways;
+            if (nextDp[nextMask] &gt;= MOD) nextDp[nextMask] -= MOD;
+            return;
+        }
+
+        if ((mask &amp; (1 &lt;&lt; row)) != 0) {
+            fillColumn(row + 1, mask, nextMask, ways);
+            return;
+        }
+
+        // Horizontal domino: it occupies this row in the next column too.
+        fillColumn(row + 1, mask | (1 &lt;&lt; row), nextMask | (1 &lt;&lt; row), ways);
+
+        // Vertical domino: it occupies two rows in the current column.
+        if (row + 1 &lt; rows &amp;&amp; (mask &amp; (1 &lt;&lt; (row + 1))) == 0) {
+            fillColumn(row + 2,
+                mask | (1 &lt;&lt; row) | (1 &lt;&lt; (row + 1)),
+                nextMask,
+                ways);
+        }
+    }
+
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+        int m = fs.nextInt();
+
+        // Tiling is symmetric; use the smaller side as mask width.
+        if (n &gt; m) {
+            int temp = n;
+            n = m;
+            m = temp;
+        }
+        rows = n;
+
+        int masks = 1 &lt;&lt; rows;
+        long[] dp = new long[masks];
+        dp[0] = 1;
+
+        for (int col = 0; col &lt; m; col++) {
+            nextDp = new long[masks];
+            for (int mask = 0; mask &lt; masks; mask++) {
+                if (dp[mask] != 0) fillColumn(0, mask, 0, dp[mask]);
+            }
+            dp = nextDp;
+        }
+
+        System.out.println(dp[0]);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Counting Numbers</h2>
+      <span>digit DP · tight + previous digit</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count integers in [a,b] where no two adjacent digits are equal.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(19·11·2·2·10) time, tiny space. Evaluate F(b)-F(a-1); no modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dfs(pos,prev,tight,started) = valid ways to complete digits from pos; prev=10 means no real previous digit.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Try d≤limit; reject if started and d==prev. New tight follows the upper-bound digit. Base at end: 1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Top-down memoization over digit positions. Digits are picked once per position.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Leading zeros must not behave like repeated zeroes. Memory hook: “started decides whether prev exists.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Array Description has the same local-adjacency idea, but digit DP adds tight bound and leading-zero handling.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I build the number digit by digit while tracking the upper-bound status and previous real digit.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static String digits;
+    static long[][][][] memo;
+
+    static long dfs(int pos, int prev, int tight, int started) {
+        if (pos == digits.length()) return 1;
+
+        long cached = memo[pos][prev][tight][started];
+        if (cached != -1) return cached;
+
+        int limit = tight == 1 ? digits.charAt(pos) - &#x27;0&#x27; : 9;
+        long answer = 0;
+
+        for (int digit = 0; digit &lt;= limit; digit++) {
+            if (started == 1 &amp;&amp; digit == prev) continue;
+
+            int nextStarted = (started == 1 || digit != 0) ? 1 : 0;
+            int nextPrev = nextStarted == 1 ? digit : 10;
+            int nextTight = (tight == 1 &amp;&amp; digit == limit) ? 1 : 0;
+
+            answer += dfs(pos + 1, nextPrev, nextTight, nextStarted);
+        }
+
+        return memo[pos][prev][tight][started] = answer;
+    }
+
+    static long countUpTo(long x) {
+        if (x &lt; 0) return 0;
+
+        digits = Long.toString(x);
+        memo = new long[20][11][2][2];
+
+        for (int pos = 0; pos &lt; 20; pos++) {
+            for (int prev = 0; prev &lt; 11; prev++) {
+                for (int tight = 0; tight &lt; 2; tight++) {
+                    Arrays.fill(memo[pos][prev][tight], -1);
+                }
+            }
+        }
+
+        return dfs(0, 10, 1, 0);
+    }
+
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        long a = fs.nextLong();
+        long b = fs.nextLong();
+
+        System.out.println(countUpTo(b) - countUpTo(a - 1));
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Increasing Subsequence II</h2>
+      <span>count · Fenwick tree DP</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count all strictly increasing subsequences when values and n are large.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n log n) time, O(n) space: coordinate compression plus Fenwick prefix sums; modulo.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">ways[i] = increasing subsequences ending at index i; Fenwick stores summed ways by ending-value rank.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">ways = 1 + sum(ranks &lt; rank(a[i])); then add ways at rank(a[i]).</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Scan indexes left-to-right. Query rank-1, then update rank; equal values cannot extend each other.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Query rank-1, never rank. Memory hook: “strictly increasing = query smaller, then update.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">LIS stores the smallest tail for each length; this sums the counts of all valid smaller endpoints.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“Every subsequence ending at x is either [x] or a previous subsequence ending with a smaller value plus x.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — CSES runnable: class Main</div>
+    <pre><code>import java.io.*;
+import java.util.*;
+
+public class Main {
+    static final long MOD = 1_000_000_007L;
+
+    static final class Fenwick {
+        int n;
+        long[] bit;
+
+        Fenwick(int n) {
+            this.n = n;
+            this.bit = new long[n + 1];
+        }
+
+        void add(int index, long value) {
+            for (int i = index; i &lt;= n; i += i &amp; -i) {
+                bit[i] += value;
+                if (bit[i] &gt;= MOD) bit[i] -= MOD;
+            }
+        }
+
+        long sum(int index) {
+            long result = 0;
+            for (int i = index; i &gt; 0; i -= i &amp; -i) {
+                result += bit[i];
+                if (result &gt;= MOD) result -= MOD;
+            }
+            return result;
+        }
+    }
+
+
+    static final class FastScanner {
+        private final byte[] buffer = new byte[1 &lt;&lt; 16];
+        private int ptr = 0, len = 0;
+
+        private int read() throws IOException {
+            if (ptr &gt;= len) {
+                len = System.in.read(buffer);
+                ptr = 0;
+                if (len &lt; 0) return -1;
+            }
+            return buffer[ptr++] &amp; 255;
+        }
+
+        String next() throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int c;
+            do { c = read(); } while (c &lt;= 32 &amp;&amp; c != -1);
+            while (c &gt; 32 &amp;&amp; c != -1) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        FastScanner fs = new FastScanner();
+        int n = fs.nextInt();
+
+        int[] a = new int[n];
+        for (int i = 0; i &lt; n; i++) a[i] = fs.nextInt();
+
+        int[] values = a.clone();
+        Arrays.sort(values);
+
+        int unique = 0;
+        for (int value : values) {
+            if (unique == 0 || values[unique - 1] != value) {
+                values[unique++] = value;
+            }
+        }
+
+        Fenwick fenwick = new Fenwick(unique);
+        long answer = 0;
+
+        for (int value : a) {
+            int rank = Arrays.binarySearch(values, 0, unique, value) + 1;
+            long ways = 1 + fenwick.sum(rank - 1);
+            if (ways &gt;= MOD) ways -= MOD;
+
+            fenwick.add(rank, ways);
+            answer += ways;
+            if (answer &gt;= MOD) answer -= MOD;
+        }
+
+        System.out.println(answer);
+    }
+}</code></pre>
+  </section>
+</article>
+</section><section class="group"><h1>FAANG Interview Add-ons</h1>
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>House Robber</h2>
+      <span>LeetCode 198 · linear max</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Maximize selected value from a line when adjacent choices conflict.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n) time, O(1) space.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">prev1 = best answer through previous house; prev2 = best through house before that.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">current = max(prev1, prev2 + nums[i]). Base: both 0.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Scan houses left-to-right. Each house is take once or skip once.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “take current → jump two back.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Book Shop has a budget dimension; here only adjacency matters, so two previous states are enough.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“At each house I compare skipping it with taking it plus the best answer two houses back.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int rob(int[] nums) {
+        int prev2 = 0;
+        int prev1 = 0;
+
+        for (int money : nums) {
+            int current = Math.max(prev1, prev2 + money);
+            prev2 = prev1;
+            prev1 = current;
+        }
+
+        return prev1;
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>House Robber II</h2>
+      <span>LeetCode 213 · circular max</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Same non-adjacent selection, but first and last positions conflict because the array is circular.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n) time, O(1) space.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">For each linear case, rolling state stores the best answer through current house.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Any valid circular solution excludes first or excludes last: max(rob[0..n-2], rob[1..n-1]).</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Run the linear House Robber transition twice, left-to-right.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Handle n=1. Memory hook: “circle → exclude first or exclude last.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">House Robber I has one line; this problem removes its circular edge with two exhaustive cases.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“Every valid answer skips either the first or last house, so I solve two linear robber problems.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    private int robRange(int[] nums, int left, int right) {
+        int prev2 = 0;
+        int prev1 = 0;
+
+        for (int i = left; i &lt;= right; i++) {
+            int current = Math.max(prev1, prev2 + nums[i]);
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return prev1;
+    }
+
+    public int rob(int[] nums) {
+        if (nums.length == 1) return nums[0];
+        return Math.max(
+            robRange(nums, 0, nums.length - 2),
+            robRange(nums, 1, nums.length - 1)
+        );
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Partition Equal Subset Sum</h2>
+      <span>LeetCode 416 · boolean 0/1</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Check whether values can split into two subsets with equal total.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·S/2) time, O(S/2) space.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">can[s] = whether processed values can make sum s.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">If total is even, can[s] |= can[s-x]. Base can[0]=true.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Value outer; sum backward, because each number can be used once.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “backward = do not reuse a number.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Money Sums computes reachability of all sums; this asks only whether sum/2 is reachable.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“Equal partition is exactly 0/1 subset sum to half the total.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public boolean canPartition(int[] nums) {
+        int total = 0;
+        for (int x : nums) total += x;
+
+        if ((total &amp; 1) == 1) return false;
+
+        int target = total / 2;
+        boolean[] can = new boolean[target + 1];
+        can[0] = true;
+
+        for (int x : nums) {
+            for (int sum = target; sum &gt;= x; sum--) {
+                can[sum] |= can[sum - x];
+            }
+        }
+
+        return can[target];
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Target Sum</h2>
+      <span>LeetCode 494 · subset count</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count plus/minus sign assignments producing target.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·P) time, O(P) space, P=(sum+target)/2.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[s] = number of processed-value subsets chosen to have positive-sign sum s.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">If P−N=target and P+N=sum, then P=(sum+target)/2. Count 0/1 subsets summing to P.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Value outer; sum backward. Each original number chooses exactly one sign.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Check range and parity. Zero values correctly double counts. Memory hook: “signs → choose positive subset.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Two Sets II also counts 0/1 subset sums, but target is fixed at half total and complement symmetry is removed.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I convert plus/minus choices into selecting which values form the positive subset.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for (int x : nums) sum += x;
+
+        if (Math.abs(target) &gt; sum || ((sum + target) &amp; 1) != 0) return 0;
+
+        int positive = (sum + target) / 2;
+        int[] dp = new int[positive + 1];
+        dp[0] = 1;
+
+        for (int x : nums) {
+            for (int s = positive; s &gt;= x; s--) {
+                dp[s] += dp[s - x];
+            }
+        }
+
+        return dp[positive];
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Decode Ways</h2>
+      <span>LeetCode 91 · prefix count</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count valid decodings when a step can consume one or two digits.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n) time, O(1) space.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[i] = number of ways to decode first i characters.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Add dp[i-1] if final one-digit code is 1..9; add dp[i-2] if final two-digit code is 10..26.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Process string left-to-right; current character closes a token of length one or two.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">0 cannot stand alone, but 10 and 20 are valid. Memory hook: “check one digit and two digits.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Dice Combinations chooses a legal final move size; Decode Ways chooses a legal final token length based on digits.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“At each character I count valid decodings ending with a one-digit or two-digit code.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0 || s.charAt(0) == &#x27;0&#x27;) return 0;
+
+        int prev2 = 1; // dp[0]
+        int prev1 = 1; // dp[1]
+
+        for (int i = 2; i &lt;= s.length(); i++) {
+            int one = s.charAt(i - 1) - &#x27;0&#x27;;
+            int two = (s.charAt(i - 2) - &#x27;0&#x27;) * 10 + one;
+
+            int current = 0;
+            if (one &gt;= 1) current += prev1;
+            if (two &gt;= 10 &amp;&amp; two &lt;= 26) current += prev2;
+
+            prev2 = prev1;
+            prev1 = current;
+        }
+
+        return prev1;
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Word Break</h2>
+      <span>LeetCode 139 · boolean prefix DP</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Check whether a string can be segmented into valid dictionary words.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n·L²) with Java substring and HashSet, O(n) space; trie is an optional optimization.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[i] = whether prefix s[0..i) is segmentable.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">dp[end]=true if some dp[end-len] is true and suffix s[end-len..end) is a dictionary word. Base dp[0]=true.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Prefix end forward. Words may be reused, but each must end at current position.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Limit checks to maximum word length. Memory hook: “can a valid word end exactly here?”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Decode Ways counts valid numeric tokenizations; Word Break checks feasibility using a dictionary of arbitrary tokens.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“For each prefix end, I test whether a dictionary suffix follows a segmentable prefix.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>import java.util.*;
+
+class Solution {
+    public boolean wordBreak(String s, List&lt;String&gt; wordDict) {
+        Set&lt;String&gt; dict = new HashSet&lt;&gt;(wordDict);
+        int maxLength = 0;
+        for (String word : wordDict) maxLength = Math.max(maxLength, word.length());
+
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+
+        for (int end = 1; end &lt;= s.length(); end++) {
+            for (int len = 1; len &lt;= maxLength &amp;&amp; len &lt;= end; len++) {
+                if (dp[end - len] &amp;&amp; dict.contains(s.substring(end - len, end))) {
+                    dp[end] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp[s.length()];
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Longest Palindromic Subsequence</h2>
+      <span>LeetCode 516 · interval DP</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Longest palindrome obtained after deleting characters while preserving order.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n²) time, O(n²) space for clear standard interval DP.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[left][right] = LPS length in s[left..right].</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Matching ends: 2+dp[left+1][right-1]. Else: max(dp[left+1][right], dp[left][right-1]). Base dp[i][i]=1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Left index descends and right index ascends, so smaller intervals are available.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Do not confuse subsequence with substring. Memory hook: “matching ends are worth two; otherwise drop one end.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">LCS compares two prefixes; LPS compares two ends of one interval and requires mirrored matches.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“A palindrome either uses matching endpoints or discards one endpoint to get the best smaller interval.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int longestPalindromeSubseq(String s) {
+        int n = s.length();
+        int[][] dp = new int[n][n];
+
+        for (int left = n - 1; left &gt;= 0; left--) {
+            dp[left][left] = 1;
+
+            for (int right = left + 1; right &lt; n; right++) {
+                if (s.charAt(left) == s.charAt(right)) {
+                    dp[left][right] = 2 + (right == left + 1 ? 0 : dp[left + 1][right - 1]);
+                } else {
+                    dp[left][right] = Math.max(dp[left + 1][right], dp[left][right - 1]);
+                }
+            }
+        }
+
+        return n == 0 ? 0 : dp[0][n - 1];
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Maximal Square</h2>
+      <span>LeetCode 221 · grid max</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Find the area of the largest all-1 square in a binary matrix.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(rows·cols) time, O(cols) space.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[j] = largest all-1 square side ending at current row and column j.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">If cell is 1: 1+min(up,left,diagonal); otherwise 0. Base virtual zero row and column.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Rows top-down, columns left-right. Save old dp[j] as diagonal before overwriting.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “a square grows only as far as its weakest neighbour.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Grid Paths adds predecessors to count routes; Maximal Square takes their minimum to guarantee a complete square.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“A 1-cell grows a square only when up, left and diagonal can all support the next side length.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int maximalSquare(char[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        int[] dp = new int[cols + 1];
+        int bestSide = 0;
+
+        for (int row = 0; row &lt; rows; row++) {
+            int diagonal = 0;
+
+            for (int col = 1; col &lt;= cols; col++) {
+                int up = dp[col];
+
+                if (matrix[row][col - 1] == &#x27;1&#x27;) {
+                    dp[col] = 1 + Math.min(diagonal, Math.min(dp[col], dp[col - 1]));
+                    bestSide = Math.max(bestSide, dp[col]);
+                } else {
+                    dp[col] = 0;
+                }
+
+                diagonal = up;
+            }
+        }
+
+        return bestSide * bestSide;
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Burst Balloons</h2>
+      <span>LeetCode 312 · interval DP</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Maximize reward when removing an item changes its neighbours; choose the last removed item in each interval.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n³) time, O(n²) space.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[left][right] = maximum coins from bursting all balloons strictly inside open interval (left,right).</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">Choose k as last burst: a[left]·a[k]·a[right] + dp[left][k] + dp[k][right]. Add sentinel 1 at both ends.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Increase interval width so all smaller open intervals are ready.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Choose last, not first: last has stable neighbours. Memory hook: “last operation fixes the boundary.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">Rectangle Cutting chooses a first cut; Burst Balloons chooses a last operation to make its boundary deterministic.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I choose the final balloon in an interval because its surviving neighbours are then known.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+        int[] a = new int[n + 2];
+        a[0] = 1;
+        a[n + 1] = 1;
+        System.arraycopy(nums, 0, a, 1, n);
+
+        int[][] dp = new int[n + 2][n + 2];
+
+        for (int width = 2; width &lt; n + 2; width++) {
+            for (int left = 0; left + width &lt; n + 2; left++) {
+                int right = left + width;
+
+                for (int last = left + 1; last &lt; right; last++) {
+                    dp[left][right] = Math.max(
+                        dp[left][right],
+                        a[left] * a[last] * a[right] + dp[left][last] + dp[last][right]
+                    );
+                }
+            }
+        }
+
+        return dp[0][n + 1];
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Best Time to Buy and Sell Stock with Cooldown</h2>
+      <span>LeetCode 309 · state machine</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Maximize stock profit with one share at most and one mandatory cooldown day after selling.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(n) time, O(1) space.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">hold = best profit while holding; sold = sold today; rest = not holding and eligible to buy.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">newHold=max(hold,rest-price); newSold=hold+price; newRest=max(rest,sold).</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Process days forward; calculate all new states from the old states before overwriting.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Do not let sold buy next day. Memory hook: “sold today cannot buy tomorrow.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">House Robber has positional states; cooldown needs explicit legal-status states because actions alter future permissions.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“I model holding, just sold and resting states so illegal cooldown transitions cannot occur.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices.length == 0) return 0;
+
+        int hold = -prices[0];
+        int sold = Integer.MIN_VALUE / 4;
+        int rest = 0;
+
+        for (int i = 1; i &lt; prices.length; i++) {
+            int nextHold = Math.max(hold, rest - prices[i]);
+            int nextSold = hold + prices[i];
+            int nextRest = Math.max(rest, sold);
+
+            hold = nextHold;
+            sold = nextSold;
+            rest = nextRest;
+        }
+
+        return Math.max(sold, rest);
+    }
+}</code></pre>
+  </section>
+</article>
+
+<article class="solution">
+  <aside class="notes">
+    <div class="problem-head">
+      <h2>Distinct Subsequences</h2>
+      <span>LeetCode 115 · 1D string count</span>
+    </div>
+    <div class="note-row"><div class="label">1. Goal / Pattern</div><div class="value">Count ways to form target t as a subsequence of source s.</div></div>
+<div class="note-row"><div class="label">2. Best Approach</div><div class="value">O(|s|·|t|) time, O(|t|) space. Use long internally.</div></div>
+<div class="note-row"><div class="label">3. DP State</div><div class="value">dp[j] = number of ways to form first j characters of t from scanned source prefix.</div></div>
+<div class="note-row"><div class="label">4. Transition + Base</div><div class="value">When source char matches t[j-1], dp[j]+=dp[j-1]. Base dp[0]=1.</div></div>
+<div class="note-row"><div class="label">5. Iteration Order</div><div class="value">Source forward; target backward so one source character cannot be reused in one subsequence.</div></div>
+<div class="note-row"><div class="label">7. Catch / Memory Hook</div><div class="value">Memory hook: “backward target loop = source character used once.”</div></div>
+<div class="note-row"><div class="label">8. Similar / Difference</div><div class="value">LCS maximizes a common subsequence length; this counts all possible source-position matchings for a fixed target.</div></div>
+<div class="note-row"><div class="label">9. Interview One-Liner</div><div class="value">“A matching source character extends every way that already formed the previous target prefix.”</div></div>
+  </aside>
+  <section class="code-side">
+    <div class="code-label">6. Full Java 17 Code — LeetCode-ready: class Solution</div>
+    <pre><code>class Solution {
+    public int numDistinct(String s, String t) {
+        long[] dp = new long[t.length() + 1];
+        dp[0] = 1;
+
+        for (int i = 0; i &lt; s.length(); i++) {
+            for (int j = t.length(); j &gt;= 1; j--) {
+                if (s.charAt(i) == t.charAt(j - 1)) {
+                    dp[j] += dp[j - 1];
+                }
+            }
+        }
+
+        return (int) dp[t.length()];
+    }
+}</code></pre>
+  </section>
+</article>
+</section>
+
+<section class="bugs">
+  <h2>Most Common DP Bugs</h2>
+  <div class="bugs-grid">
+    <div><b>Wrong base case:</b> define empty prefix / sum 0 / one interval before transition.</div>
+    <div><b>Wrong loop direction:</b> forward lets current item repeat; backward blocks reuse.</div>
+    <div><b>Overwriting old row:</b> use <code>prev/cur</code> when all dependencies must read prior position.</div>
+    <div><b>Not resetting arrays:</b> clear next mask, current row and memo between iterations/tests.</div>
+    <div><b>int overflow:</b> use <code>long</code> for counts, rewards, sums and pre-mod products.</div>
+    <div><b>Permutations vs combinations:</b> sum outer = ordered; item outer = unordered.</div>
+    <div><b>Unreachable state:</b> min DP starts INF; max DP can need negative INF; boolean starts false.</div>
+    <div><b>Strictness error:</b> LIS uses first ≥, Projects requires <code>end &lt; start</code>, strict Fenwick queries rank−1.</div>
+    <div><b>Dropped ties:</b> lexicographic/frontier DP may require every tied best state, not just one.</div>
+  </div>
+</section>
+
+</body>
+</html>
