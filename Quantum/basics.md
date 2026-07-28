@@ -14,15 +14,15 @@ A classical computer stores information using bits.
 
 Each bit has a definite value:
 
-[
+$$
 0
-]
+$$
 
 or
 
-[
+$$
 1
-]
+$$
 
 A classical operation changes one definite bit pattern into another. For example, a NOT operation changes `0` into `1` and `1` into `0`.
 
@@ -111,28 +111,28 @@ Quantum advantage depends on finding an algorithm whose structure uses superposi
 
 A classical bit has two possible states:
 
-[
+$$
 0 \quad \text{or} \quad 1
-]
+$$
 
 A qubit also has two basic states, but its complete state may be a combination of both.
 
 The two basic qubit states are written:
 
-[
+$$
 |0\rangle
-]
+$$
 
 and
 
-[
+$$
 |1\rangle
-]
+$$
 
 The symbols are read as:
 
-* (|0\rangle): “ket zero”
-* (|1\rangle): “ket one”
+* $|0\rangle$: “ket zero”
+* $|1\rangle$: “ket one”
 
 The vertical bar and angled bracket form **ket notation**, also called Dirac notation.
 
@@ -163,25 +163,25 @@ Each term will be explained later.
 
 A general single-qubit state is written:
 
-[
+$$
 |\psi\rangle = \alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 Here:
 
-* (|\psi\rangle) means “the quantum state called psi.”
-* (|0\rangle) is the computational basis state zero.
-* (|1\rangle) is the computational basis state one.
-* (\alpha) is the amplitude associated with (|0\rangle).
-* (\beta) is the amplitude associated with (|1\rangle).
+* $|\psi\rangle$ means “the quantum state called psi.”
+* $|0\rangle$ is the computational basis state zero.
+* $|1\rangle$ is the computational basis state one.
+* $\alpha$ is the amplitude associated with $|0\rangle$.
+* $\beta$ is the amplitude associated with $|1\rangle$.
 
-The Greek letter (\psi), pronounced “sigh,” is commonly used as a name for a quantum state.
+The Greek letter $\psi$, pronounced “sigh,” is commonly used as a name for a quantum state.
 
 The amplitudes must satisfy:
 
-[
+$$
 |\alpha|^2+|\beta|^2=1
-]
+$$
 
 This condition ensures that the probabilities of all possible measurement outcomes add to 100%.
 
@@ -189,49 +189,49 @@ This condition ensures that the probabilities of all possible measurement outcom
 
 Consider:
 
-[
+$$
 |\psi\rangle=
 \frac{\sqrt{3}}{2}|0\rangle+
 \frac{1}{2}|1\rangle
-]
+$$
 
-The amplitude of (|0\rangle) is:
+The amplitude of $|0\rangle$ is:
 
-[
+$$
 \alpha=\frac{\sqrt{3}}{2}
-]
+$$
 
-The amplitude of (|1\rangle) is:
+The amplitude of $|1\rangle$ is:
 
-[
+$$
 \beta=\frac{1}{2}
-]
+$$
 
-The probability of measuring `0` is the squared magnitude of (\alpha):
+The probability of measuring `0` is the squared magnitude of $\alpha$:
 
-[
+$$
 P(0)=\left|\frac{\sqrt{3}}{2}\right|^2
-]
+$$
 
 Since the value is real, squaring its magnitude means ordinary squaring:
 
-[
+$$
 P(0)=\frac{3}{4}=0.75
-]
+$$
 
 The probability of measuring `1` is:
 
-[
+$$
 P(1)=\left|\frac{1}{2}\right|^2
 =\frac{1}{4}
 =0.25
-]
+$$
 
 The probabilities add to one:
 
-[
+$$
 0.75+0.25=1
-]
+$$
 
 ### 0.2.6 Qiskit implementation
 
@@ -255,10 +255,10 @@ Expected probability output:
 
 Line by line:
 
-* `sqrt` is imported so that we can calculate (\sqrt{3}).
+* `sqrt` is imported so that we can calculate $\sqrt{3}$.
 * `Statevector` is Qiskit’s class for representing pure quantum states.
-* The first list entry is the amplitude of (|0\rangle).
-* The second list entry is the amplitude of (|1\rangle).
+* The first list entry is the amplitude of $|0\rangle$.
+* The second list entry is the amplitude of $|1\rangle$.
 * `probabilities_dict()` squares the amplitude magnitudes and labels the resulting probabilities.
 
 Qiskit’s `Statevector` can be created from a complex vector or from a quantum circuit.
@@ -274,8 +274,8 @@ The state determines the probabilities of possible results across repeated prepa
 ### 0.2.8 Quick check
 
 1. What are the two computational basis states of a qubit?
-2. What do (\alpha) and (\beta) represent?
-3. For a valid state, what must (|\alpha|^2+|\beta|^2) equal?
+2. What do $\alpha$ and $\beta$ represent?
+3. For a valid state, what must $|\alpha|^2+|\beta|^2$ equal?
 
 ---
 
@@ -318,73 +318,73 @@ Two state vectors that differ only by an overall, or global, phase represent the
 
 For a single qubit:
 
-[
+$$
 |\psi\rangle=\alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 The same state can be written as a column vector:
 
-[
+$$
 |\psi\rangle=
 \begin{bmatrix}
-\alpha\
+\alpha\\
 \beta
 \end{bmatrix}
-]
+$$
 
-The top entry is the amplitude of (|0\rangle).
+The top entry is the amplitude of $|0\rangle$.
 
-The bottom entry is the amplitude of (|1\rangle).
+The bottom entry is the amplitude of $|1\rangle$.
 
 For example:
 
-[
+$$
 |0\rangle=
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
 and:
 
-[
+$$
 |1\rangle=
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
 ### 0.3.5 Worked example
 
 Consider:
 
-[
+$$
 |\psi\rangle=
 \frac{1}{\sqrt{2}}|0\rangle-
 \frac{1}{\sqrt{2}}|1\rangle
-]
+$$
 
 Its vector is:
 
-[
+$$
 |\psi\rangle=
 \begin{bmatrix}
-\frac{1}{\sqrt{2}}\
+\frac{1}{\sqrt{2}}\\
 -\frac{1}{\sqrt{2}}
 \end{bmatrix}
-]
+$$
 
 The measurement probabilities are:
 
-[
+$$
 P(0)=\left|\frac{1}{\sqrt{2}}\right|^2=\frac{1}{2}
-]
+$$
 
-[
+$$
 P(1)=\left|-\frac{1}{\sqrt{2}}\right|^2=\frac{1}{2}
-]
+$$
 
 The minus sign does not affect these two probabilities because squaring the magnitude removes the sign.
 
@@ -413,8 +413,8 @@ Line by line:
 
 * `state.data` returns the underlying complex vector.
 * `0.j` means that the imaginary part is zero.
-* Both amplitude magnitudes are (1/\sqrt{2}).
-* Both computational-basis probabilities are (1/2).
+* Both amplitude magnitudes are $1/\sqrt{2}$.
+* Both computational-basis probabilities are $1/2$.
 
 ### 0.3.7 Common misunderstanding
 
@@ -422,15 +422,15 @@ A quantum state is not always equivalent to a list of measurement probabilities.
 
 The states
 
-[
+$$
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 and
 
-[
+$$
 \frac{|0\rangle-|1\rangle}{\sqrt{2}}
-]
+$$
 
 both produce 50–50 results in the computational basis. They are nevertheless different states because their relative phases differ.
 
@@ -438,7 +438,7 @@ both produce 50–50 results in the computational basis. They are nevertheless d
 
 1. What information does a quantum state provide?
 2. Why are probabilities alone sometimes insufficient to identify a state?
-3. Which vector entry represents the amplitude of (|1\rangle)?
+3. Which vector entry represents the amplitude of $|1\rangle$?
 
 ---
 
@@ -450,11 +450,11 @@ The computational basis is the standard coordinate system used for qubits.
 
 For one qubit, its basis states are:
 
-[
+$$
 |0\rangle
 \quad\text{and}\quad
 |1\rangle
-]
+$$
 
 They are analogous to the horizontal and vertical axes of a two-dimensional coordinate system.
 
@@ -466,7 +466,7 @@ A location on a flat map can be described using an east-west coordinate and a no
 
 The location is not required to lie directly on either axis. The axes are reference directions used to describe it.
 
-Similarly, a qubit state need not equal (|0\rangle) or (|1\rangle). Those states provide the reference basis used to describe it.
+Similarly, a qubit state need not equal $|0\rangle$ or $|1\rangle$. Those states provide the reference basis used to describe it.
 
 The analogy stops because quantum amplitudes may be complex numbers rather than ordinary geometric distances.
 
@@ -474,9 +474,9 @@ The analogy stops because quantum amplitudes may be complex numbers rather than 
 
 The computational basis of a single qubit is the orthonormal set:
 
-[
-{|0\rangle,|1\rangle}
-]
+$$
+\{|0\rangle, |1\rangle\}
+$$
 
 “Orthonormal” means:
 
@@ -487,67 +487,67 @@ In this context, orthogonal states are perfectly distinguishable by a computatio
 
 ### 0.4.4 Mathematical representation
 
-[
+$$
 |0\rangle=
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
-[
+$$
 |1\rangle=
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
-For (|0\rangle):
+For $|0\rangle$:
 
 * amplitude of zero = 1;
 * amplitude of one = 0.
 
 Therefore:
 
-[
+$$
 P(0)=|1|^2=1
-]
+$$
 
-[
+$$
 P(1)=|0|^2=0
-]
+$$
 
-For (|1\rangle), these probabilities are reversed.
+For $|1\rangle$, these probabilities are reversed.
 
 ### 0.4.5 Worked example
 
 Suppose the state is:
 
-[
+$$
 |\psi\rangle=0|0\rangle+1|1\rangle
-]
+$$
 
 Removing the zero term gives:
 
-[
+$$
 |\psi\rangle=|1\rangle
-]
+$$
 
 The corresponding vector is:
 
-[
+$$
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
 A computational-basis measurement returns `1` with probability one.
 
 ### 0.4.6 Qiskit implementation
 
-#### Creating (|0\rangle)
+#### Creating $|0\rangle$
 
 ```python
 from qiskit.quantum_info import Statevector
@@ -565,7 +565,7 @@ Expected output:
 {'0': 1.0}
 ```
 
-#### Creating (|1\rangle)
+#### Creating $|1\rangle$
 
 ```python
 from qiskit.quantum_info import Statevector
@@ -587,24 +587,24 @@ Expected output:
 
 ### 0.4.7 Common misunderstanding
 
-The symbol (|0\rangle) does not mean the number zero.
+The symbol $|0\rangle$ does not mean the number zero.
 
 It names a vector:
 
-[
+$$
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
-Similarly, (|1\rangle) names a vector rather than the ordinary number one.
+Similarly, $|1\rangle$ names a vector rather than the ordinary number one.
 
 ### 0.4.8 Quick check
 
-1. Write (|0\rangle) as a column vector.
-2. What is the probability of measuring `1` from (|0\rangle)?
-3. Why are (|0\rangle) and (|1\rangle) called basis states?
+1. Write $|0\rangle$ as a column vector.
+2. What is the probability of measuring `1` from $|0\rangle$?
+3. Why are $|0\rangle$ and $|1\rangle$ called basis states?
 
 ---
 
@@ -616,12 +616,12 @@ A superposition is a quantum state containing nonzero amplitudes for more than o
 
 For example:
 
-[
+$$
 |\psi\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
-This state contains amplitudes for both (|0\rangle) and (|1\rangle).
+This state contains amplitudes for both $|0\rangle$ and $|1\rangle$.
 
 Measurement still returns only one classical result. Before measurement, however, both amplitudes can participate in quantum interference.
 
@@ -639,29 +639,29 @@ A state is a superposition relative to a chosen basis when it is represented as 
 
 For a single qubit:
 
-[
+$$
 |\psi\rangle=\alpha|0\rangle+\beta|1\rangle
-]
+$$
 
-If both (\alpha) and (\beta) are nonzero, the state is a superposition of the computational basis states.
+If both $\alpha$ and $\beta$ are nonzero, the state is a superposition of the computational basis states.
 
 Superposition is basis-dependent. A state may be a superposition in one basis and a basis state in another.
 
 ### 0.5.4 Probability amplitudes
 
-The numbers (\alpha) and (\beta) are **probability amplitudes**.
+The numbers $\alpha$ and $\beta$ are **probability amplitudes**.
 
 They are not probabilities.
 
 To obtain a measurement probability, take the squared magnitude:
 
-[
+$$
 P(0)=|\alpha|^2
-]
+$$
 
-[
+$$
 P(1)=|\beta|^2
-]
+$$
 
 If an amplitude is a real number, its squared magnitude is its ordinary square.
 
@@ -671,59 +671,59 @@ If an amplitude is complex, we will use its complex magnitude.
 
 All possible outcome probabilities must add to one:
 
-[
+$$
 |\alpha|^2+|\beta|^2=1
-]
+$$
 
 This is called the **normalisation condition**.
 
 Consider the vector:
 
-[
+$$
 \begin{bmatrix}
-1\
+1\\
 1
 \end{bmatrix}
-]
+$$
 
 The squared magnitudes add to:
 
-[
+$$
 1^2+1^2=2
-]
+$$
 
 Therefore, this is not normalised.
 
 To normalise it, divide each entry by the square root of the total:
 
-[
+$$
 \sqrt{2}
-]
+$$
 
 The normalised vector is:
 
-[
+$$
 \begin{bmatrix}
-\frac{1}{\sqrt{2}}\
+\frac{1}{\sqrt{2}}\\
 \frac{1}{\sqrt{2}}
 \end{bmatrix}
-]
+$$
 
 ### 0.5.6 The plus and minus states
 
 Two important superposition states are:
 
-[
+$$
 |+\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 and:
 
-[
+$$
 |-\rangle=
 \frac{|0\rangle-|1\rangle}{\sqrt{2}}
-]
+$$
 
 Both produce 50–50 computational-basis probabilities.
 
@@ -733,53 +733,50 @@ Their difference is relative phase.
 
 Consider:
 
-[
+$$
 |\psi\rangle=
 \frac{i}{\sqrt{2}}|0\rangle+
 \frac{1}{\sqrt{2}}|1\rangle
-]
+$$
 
-Here (i) is the imaginary unit.
+Here $i$ is the imaginary unit.
 
-The magnitude of (i) is one, so:
+The magnitude of $i$ is one, so:
 
-[
+$$
 \left|\frac{i}{\sqrt{2}}\right|^2
-=================================
-
-# \frac{|i|^2}{2}
-
-\frac{1}{2}
-]
+= \frac{|i|^2}{2}
+= \frac{1}{2}
+$$
 
 For the second amplitude:
 
-[
+$$
 \left|\frac{1}{\sqrt{2}}\right|^2
-=================================
+=
 
 \frac{1}{2}
-]
+$$
 
 Therefore:
 
-[
+$$
 P(0)=\frac{1}{2}
-]
+$$
 
-[
+$$
 P(1)=\frac{1}{2}
-]
+$$
 
 The state is normalised because:
 
-[
+$$
 \frac{1}{2}+\frac{1}{2}=1
-]
+$$
 
 ### 0.5.8 Qiskit implementation
 
-#### Creating (|+\rangle)
+#### Creating $|+\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -804,13 +801,13 @@ Expected output:
 Line by line:
 
 * `QuantumCircuit(1)` creates a circuit containing one qubit.
-* Qiskit qubits begin in (|0\rangle) unless prepared differently.
+* Qiskit qubits begin in $|0\rangle$ unless prepared differently.
 * `h(0)` applies a Hadamard gate to qubit zero.
-* The Hadamard gate changes (|0\rangle) into (|+\rangle).
+* The Hadamard gate changes $|0\rangle$ into $|+\rangle$.
 * `Statevector.from_instruction()` calculates the circuit’s resulting ideal pure state.
 * `probabilities_dict()` reports computational-basis probabilities.
 
-#### Creating (|-\rangle)
+#### Creating $|-\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -836,20 +833,20 @@ Expected statevector:
 
 Line by line:
 
-* The X gate changes (|0\rangle) into (|1\rangle).
-* The H gate changes (|1\rangle) into (|-\rangle).
+* The X gate changes $|0\rangle$ into $|1\rangle$.
+* The H gate changes $|1\rangle$ into $|-\rangle$.
 * The two computational-basis probabilities are both 0.5.
 * The negative second amplitude records the state’s relative phase.
 
 ### 0.5.9 Common misunderstandings
 
-**Mistake 1:** An amplitude of (1/2) means a probability of (1/2).
+**Mistake 1:** An amplitude of $1/2$ means a probability of $1/2$.
 
 It does not. The probability is:
 
-[
+$$
 \left|\frac{1}{2}\right|^2=\frac{1}{4}
-]
+$$
 
 **Mistake 2:** A qubit in superposition stores two ordinary bits.
 
@@ -862,8 +859,8 @@ A classical bit that is secretly either `0` or `1` is not generally equivalent t
 ### 0.5.10 Quick check
 
 1. Is an amplitude the same as a probability?
-2. Why is the vector ([1,1]^T) not a valid statevector?
-3. What are the computational-basis probabilities of (|-\rangle)?
+2. Why is the vector $[1,1]^T$ not a valid statevector?
+3. What are the computational-basis probabilities of $|-\rangle$?
 
 ---
 
@@ -875,11 +872,11 @@ Measurement converts quantum information into a classical result.
 
 For a single qubit measured in the computational basis, the possible outcomes are:
 
-[
+$$
 0
 \quad\text{or}\quad
 1
-]
+$$
 
 The state’s amplitudes determine the probabilities.
 
@@ -895,20 +892,20 @@ It stops being accurate because quantum measurement can also disturb the state, 
 
 For the state:
 
-[
+$$
 |\psi\rangle=\alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 a computational-basis measurement produces:
 
-* outcome `0` with probability (|\alpha|^2);
-* outcome `1` with probability (|\beta|^2).
+* outcome `0` with probability $|\alpha|^2$;
+* outcome `1` with probability $|\beta|^2$.
 
 After an ideal projective measurement, the post-measurement state corresponds to the observed outcome.
 
-If the result is `0`, the state becomes (|0\rangle).
+If the result is `0`, the state becomes $|0\rangle$.
 
-If the result is `1`, the state becomes (|1\rangle).
+If the result is `1`, the state becomes $|1\rangle$.
 
 This update is often called **collapse**.
 
@@ -936,15 +933,15 @@ Because one shot gives only one sample, quantum experiments are usually repeated
 
 Suppose a state has:
 
-[
+$$
 P(0)=0.5
-]
+$$
 
 and:
 
-[
+$$
 P(1)=0.5
-]
+$$
 
 With 1,000 shots, you might receive:
 
@@ -960,33 +957,33 @@ As the number of shots increases, observed frequencies usually approach the unde
 
 For:
 
-[
+$$
 |\psi\rangle=
 \frac{\sqrt{3}}{2}|0\rangle+
 \frac{1}{2}|1\rangle
-]
+$$
 
 we calculated:
 
-[
+$$
 P(0)=0.75
-]
+$$
 
-[
+$$
 P(1)=0.25
-]
+$$
 
 For 1,000 shots, the expected counts are approximately:
 
-[
+$$
 1000 \times 0.75=750
-]
+$$
 
 and:
 
-[
+$$
 1000 \times 0.25=250
-]
+$$
 
 An actual run might produce:
 
@@ -1111,7 +1108,7 @@ Each shot normally involves preparing and running the experiment again.
 ### 0.6.11 Quick check
 
 1. What is a shot?
-2. Why might 1,000 shots from (|+\rangle) not produce exactly 500 zeros?
+2. Why might 1,000 shots from $|+\rangle$ not produce exactly 500 zeros?
 3. What happens to an ideal qubit after a computational-basis measurement returns `1`?
 
 ---
@@ -1131,22 +1128,22 @@ A complex number contains:
 
 It is written:
 
-[
+$$
 z=a+bi
-]
+$$
 
 Here:
 
-* (z) names the complex number;
-* (a) is the real part;
-* (b) is the imaginary coefficient;
-* (i) is the imaginary unit.
+* $z$ names the complex number;
+* $a$ is the real part;
+* $b$ is the imaginary coefficient;
+* $i$ is the imaginary unit.
 
 The imaginary unit is defined by:
 
-[
+$$
 i^2=-1
-]
+$$
 
 ### 0.7.2 Intuition
 
@@ -1159,9 +1156,9 @@ A complex number can be shown on a plane:
 
 For example:
 
-[
+$$
 3+2i
-]
+$$
 
 corresponds to the point three units to the right and two units upward.
 
@@ -1177,156 +1174,156 @@ The analogy stops because complex-number multiplication also rotates and scales 
 
 The complex conjugate of:
 
-[
+$$
 z=a+bi
-]
+$$
 
 is:
 
-[
+$$
 z^*=a-bi
-]
+$$
 
 The star means complex conjugation.
 
 Example:
 
-[
+$$
 z=3+2i
-]
+$$
 
-[
+$$
 z^*=3-2i
-]
+$$
 
 ### 0.7.5 Magnitude
 
-The magnitude of (z=a+bi) is:
+The magnitude of $z=a+bi$ is:
 
-[
+$$
 |z|=\sqrt{a^2+b^2}
-]
+$$
 
 This is the distance from the origin in the complex plane.
 
 For:
 
-[
+$$
 z=3+4i
-]
+$$
 
 the magnitude is:
 
-[
+$$
 |z|=\sqrt{3^2+4^2}
-]
+$$
 
-[
+$$
 |z|=\sqrt{9+16}
-]
+$$
 
-[
+$$
 |z|=\sqrt{25}=5
-]
+$$
 
 The squared magnitude is:
 
-[
+$$
 |z|^2=25
-]
+$$
 
 It can also be calculated using the complex conjugate:
 
-[
+$$
 |z|^2=z^*z
-]
+$$
 
-For (3+4i):
+For $3+4i$:
 
-[
+$$
 (3-4i)(3+4i)
-]
+$$
 
 Multiplying:
 
-[
+$$
 =9+12i-12i-16i^2
-]
+$$
 
-Since (i^2=-1):
+Since $i^2=-1$:
 
-[
+$$
 =9+16=25
-]
+$$
 
 ### 0.7.6 Why squared magnitudes become probabilities
 
 Suppose an amplitude is:
 
-[
+$$
 \alpha=\frac{1+i}{2}
-]
+$$
 
-Its real part is (1/2).
+Its real part is $1/2$.
 
-Its imaginary part is (1/2).
+Its imaginary part is $1/2$.
 
 The squared magnitude is:
 
-[
+$$
 |\alpha|^2=
 \left(\frac{1}{2}\right)^2+
 \left(\frac{1}{2}\right)^2
-]
+$$
 
-[
+$$
 |\alpha|^2=
 \frac{1}{4}+\frac{1}{4}
 =\frac{1}{2}
-]
+$$
 
-Therefore, an amplitude of ((1+i)/2) corresponds to a probability of (1/2).
+Therefore, an amplitude of $(1+i)/2$ corresponds to a probability of $1/2$.
 
 ### 0.7.7 Polar form and phase
 
 A complex number may also be written:
 
-[
+$$
 z=re^{i\theta}
-]
+$$
 
 Here:
 
-* (r) is its magnitude;
-* (\theta) is its angle, called its phase;
-* (e) is Euler’s number;
-* (i) is the imaginary unit.
+* $r$ is its magnitude;
+* $\theta$ is its angle, called its phase;
+* $e$ is Euler’s number;
+* $i$ is the imaginary unit.
 
 Euler’s formula states:
 
-[
+$$
 e^{i\theta}=\cos\theta+i\sin\theta
-]
+$$
 
 You do not need to derive this formula for this module.
 
 Important special cases include:
 
-[
+$$
 e^{i0}=1
-]
+$$
 
-[
+$$
 e^{i\pi/2}=i
-]
+$$
 
-[
+$$
 e^{i\pi}=-1
-]
+$$
 
-[
+$$
 e^{i3\pi/2}=-i
-]
+$$
 
 Complex phase is essential because quantum gates can rotate amplitudes without changing their magnitudes.
 
@@ -1334,43 +1331,35 @@ Complex phase is essential because quantum gates can rotate amplitudes without c
 
 Consider:
 
-[
+$$
 |\psi\rangle=
 \frac{1+i}{2}|0\rangle+
 \frac{1-i}{2}|1\rangle
-]
+$$
 
 For the first amplitude:
 
-[
+$$
 \left|\frac{1+i}{2}\right|^2
-============================
-
-# \frac{1^2+1^2}{2^2}
-
-# \frac{2}{4}
-
-\frac{1}{2}
-]
+= \frac{1^2+1^2}{2^2}
+= \frac{2}{4}
+= \frac{1}{2}
+$$
 
 For the second amplitude:
 
-[
+$$
 \left|\frac{1-i}{2}\right|^2
-============================
-
-# \frac{1^2+(-1)^2}{2^2}
-
-# \frac{2}{4}
-
-\frac{1}{2}
-]
+= \frac{1^2+(-1)^2}{2^2}
+= \frac{2}{4}
+= \frac{1}{2}
+$$
 
 The state is normalised:
 
-[
+$$
 \frac{1}{2}+\frac{1}{2}=1
-]
+$$
 
 ### 0.7.9 Python implementation
 
@@ -1393,7 +1382,7 @@ Expected output:
 Line by line:
 
 * Python writes the imaginary unit as `j`, not `i`.
-* `1j` represents (i).
+* `1j` represents $i$.
 * `abs(amplitude)` calculates the complex magnitude.
 * Squaring the magnitude gives the corresponding probability.
 
@@ -1403,13 +1392,13 @@ Line by line:
 
 Complex numbers are a standard mathematical system used throughout engineering and physics.
 
-**Mistake 2:** The probability of (a+bi) is ((a+bi)^2).
+**Mistake 2:** The probability of $a+bi$ is $(a+bi)^2$.
 
 The probability uses the squared magnitude:
 
-[
+$$
 |a+bi|^2=a^2+b^2
-]
+$$
 
 **Mistake 3:** Two amplitudes with equal magnitudes are equivalent.
 
@@ -1417,9 +1406,9 @@ They can have different phases and therefore produce different interference late
 
 ### 0.7.11 Quick check
 
-1. What is (i^2)?
-2. What is the complex conjugate of (2-3i)?
-3. Calculate (|3+4i|^2).
+1. What is $i^2$?
+2. What is the complex conjugate of $2-3i$?
+3. Calculate $|3+4i|^2$.
 
 ---
 
@@ -1439,21 +1428,21 @@ For two qubits, there are four basis states, so the statevector has four entries
 
 An ordinary two-dimensional vector can describe a direction and length:
 
-[
+$$
 \begin{bmatrix}
-x\
+x\\
 y
 \end{bmatrix}
-]
+$$
 
 A single-qubit statevector also has two entries:
 
-[
+$$
 \begin{bmatrix}
-\alpha\
+\alpha\\
 \beta
 \end{bmatrix}
-]
+$$
 
 The analogy stops because qubit statevectors use complex numbers and are interpreted through quantum measurement rules.
 
@@ -1461,11 +1450,11 @@ The analogy stops because qubit statevectors use complex numbers and are interpr
 
 A vector is an ordered element of a vector space.
 
-A pure (n)-qubit statevector contains:
+A pure $n$-qubit statevector contains:
 
-[
+$$
 2^n
-]
+$$
 
 complex amplitudes.
 
@@ -1473,25 +1462,25 @@ A valid statevector has norm one.
 
 For:
 
-[
+$$
 |\psi\rangle=
 \begin{bmatrix}
-\alpha\
+\alpha\\
 \beta
 \end{bmatrix}
-]
+$$
 
 the squared norm is:
 
-[
+$$
 \lVert\psi\rVert^2=|\alpha|^2+|\beta|^2
-]
+$$
 
 A valid state requires:
 
-[
+$$
 \lVert\psi\rVert^2=1
-]
+$$
 
 ### 0.8.4 Vector addition
 
@@ -1499,48 +1488,48 @@ Vectors are added entry by entry.
 
 For example:
 
-[
+$$
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
 +
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-=============
+=
 
 \begin{bmatrix}
-1\
+1\\
 1
 \end{bmatrix}
-]
+$$
 
 To turn this into a normalised quantum state:
 
-[
+$$
 \frac{1}{\sqrt{2}}
 \left(
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
 +
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
 \right)
-=======
+=
 
 \begin{bmatrix}
-1/\sqrt{2}\
+1/\sqrt{2}\\
 1/\sqrt{2}
 \end{bmatrix}
-]
+$$
 
-This is (|+\rangle).
+This is $|+\rangle$.
 
 ### 0.8.5 Scalar multiplication
 
@@ -1548,19 +1537,19 @@ A scalar is a number that multiplies every vector entry.
 
 For example:
 
-[
+$$
 2
 \begin{bmatrix}
-1\
+1\\
 3
 \end{bmatrix}
-=============
+=
 
 \begin{bmatrix}
-2\
+2\\
 6
 \end{bmatrix}
-]
+$$
 
 In quantum mechanics, multiplying a complete state by a complex number of magnitude one changes only its global phase.
 
@@ -1568,50 +1557,50 @@ In quantum mechanics, multiplying a complete state by a complex number of magnit
 
 Suppose:
 
-[
+$$
 v=
 \begin{bmatrix}
-2\
+2\\
 -i
 \end{bmatrix}
-]
+$$
 
 First calculate the sum of squared magnitudes:
 
-[
+$$
 |2|^2+|-i|^2
-]
+$$
 
-[
+$$
 =4+1=5
-]
+$$
 
 The length is:
 
-[
+$$
 \sqrt{5}
-]
+$$
 
-Divide each entry by (\sqrt{5}):
+Divide each entry by $\sqrt{5}$:
 
-[
+$$
 |\psi\rangle=
 \begin{bmatrix}
-2/\sqrt{5}\
+2/\sqrt{5}\\
 -i/\sqrt{5}
 \end{bmatrix}
-]
+$$
 
 Check:
 
-[
+$$
 \left|\frac{2}{\sqrt{5}}\right|^2+
 \left|\frac{-i}{\sqrt{5}}\right|^2
-==================================
+=
 
 \frac{4}{5}+\frac{1}{5}
 =1
-]
+$$
 
 ### 0.8.7 Qiskit implementation
 
@@ -1644,7 +1633,7 @@ Line by line:
 * `np.linalg.norm` calculates the vector’s length.
 * Dividing by the norm normalises the vector.
 * `Statevector` wraps the normalised vector as a Qiskit quantum state.
-* The squared magnitudes are (4/5) and (1/5).
+* The squared magnitudes are $4/5$ and $1/5$.
 
 ### 0.8.8 Common misunderstanding
 
@@ -1652,7 +1641,7 @@ A statevector entry is not the measured value of a qubit.
 
 It is an amplitude associated with an entire basis state.
 
-For multiple qubits, each entry corresponds to a complete bit string such as (|00\rangle) or (|101\rangle).
+For multiple qubits, each entry corresponds to a complete bit string such as $|00\rangle$ or $|101\rangle$.
 
 ### 0.8.9 Quick check
 
@@ -1696,19 +1685,19 @@ The analogy stops because valid closed-system quantum gates are restricted to **
 
 ### 0.9.3 Matrix dimensions
 
-A matrix with two rows and two columns is a (2\times2) matrix:
+A matrix with two rows and two columns is a $2\times2$ matrix:
 
-[
+$$
 A=
 \begin{bmatrix}
-a&b\
+a&b\\
 c&d
 \end{bmatrix}
-]
+$$
 
-A single-qubit gate uses a (2\times2) matrix because a single-qubit state has two amplitudes.
+A single-qubit gate uses a $2\times2$ matrix because a single-qubit state has two amplitudes.
 
-A two-qubit gate uses a (4\times4) matrix because a two-qubit state has four amplitudes.
+A two-qubit gate uses a $4\times4$ matrix because a two-qubit state has four amplitudes.
 
 ### 0.9.4 Unitary matrices
 
@@ -1720,16 +1709,16 @@ A unitary transformation:
 * preserves total probability;
 * is reversible.
 
-If (U) is unitary:
+If $U$ is unitary:
 
-[
+$$
 U^\dagger U=I
-]
+$$
 
 Here:
 
-* (U^\dagger) is the conjugate transpose of (U);
-* (I) is the identity matrix.
+* $U^\dagger$ is the conjugate transpose of $U$;
+* $I$ is the identity matrix.
 
 You do not need to verify unitarity manually for standard Qiskit gates.
 
@@ -1737,13 +1726,13 @@ You do not need to verify unitarity manually for standard Qiskit gates.
 
 The identity matrix is:
 
-[
+$$
 I=
 \begin{bmatrix}
-1&0\
+1&0\\
 0&1
 \end{bmatrix}
-]
+$$
 
 It leaves a state unchanged.
 
@@ -1751,27 +1740,27 @@ It leaves a state unchanged.
 
 The Pauli-X matrix is:
 
-[
+$$
 X=
 \begin{bmatrix}
-0&1\
+0&1\\
 1&0
 \end{bmatrix}
-]
+$$
 
-It swaps the amplitudes of (|0\rangle) and (|1\rangle).
+It swaps the amplitudes of $|0\rangle$ and $|1\rangle$.
 
 Therefore:
 
-[
+$$
 X|0\rangle=|1\rangle
-]
+$$
 
 and:
 
-[
+$$
 X|1\rangle=|0\rangle
-]
+$$
 
 It is sometimes compared to a classical NOT gate, although it also acts meaningfully on superpositions.
 
@@ -1779,64 +1768,64 @@ It is sometimes compared to a classical NOT gate, although it also acts meaningf
 
 The Pauli-Z matrix is:
 
-[
+$$
 Z=
 \begin{bmatrix}
-1&0\
+1&0\\
 0&-1
 \end{bmatrix}
-]
+$$
 
-It leaves the (|0\rangle) amplitude unchanged and negates the (|1\rangle) amplitude.
+It leaves the $|0\rangle$ amplitude unchanged and negates the $|1\rangle$ amplitude.
 
 Therefore:
 
-[
+$$
 Z|0\rangle=|0\rangle
-]
+$$
 
-[
+$$
 Z|1\rangle=-|1\rangle
-]
+$$
 
 For the plus state:
 
-[
+$$
 Z|+\rangle=|-\rangle
-]
+$$
 
 ### 0.9.8 Hadamard gate
 
 The Hadamard matrix is:
 
-[
+$$
 H=
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1&1\
+1&1\\
 1&-1
 \end{bmatrix}
-]
+$$
 
 It performs:
 
-[
+$$
 H|0\rangle=|+\rangle
-]
+$$
 
-[
+$$
 H|1\rangle=|-\rangle
-]
+$$
 
 It also reverses these transformations:
 
-[
+$$
 H|+\rangle=|0\rangle
-]
+$$
 
-[
+$$
 H|-\rangle=|1\rangle
-]
+$$
 
 The Hadamard gate is important because it converts phase differences into computational-basis differences.
 
@@ -1849,25 +1838,25 @@ It has:
 * a control qubit;
 * a target qubit.
 
-The target is flipped only when the control is (|1\rangle).
+The target is flipped only when the control is $|1\rangle$.
 
 For control first and target second:
 
-[
+$$
 |00\rangle\rightarrow|00\rangle
-]
+$$
 
-[
+$$
 |01\rangle\rightarrow|01\rangle
-]
+$$
 
-[
+$$
 |10\rangle\rightarrow|11\rangle
-]
+$$
 
-[
+$$
 |11\rangle\rightarrow|10\rangle
-]
+$$
 
 The exact matrix layout depends on the adopted bit-ordering convention. In Qiskit, controlled gates normally use the argument order `(control, target)`, while displayed bit strings place the highest-index bit on the left.
 
@@ -1896,9 +1885,9 @@ Expected statevector:
 
 Line by line:
 
-* A one-qubit circuit begins in (|0\rangle).
+* A one-qubit circuit begins in $|0\rangle$.
 * `x(0)` applies Pauli-X to qubit zero.
-* The output becomes (|1\rangle).
+* The output becomes $|1\rangle$.
 * `draw()` prints a text circuit diagram.
 
 #### Applying Z after H
@@ -1932,7 +1921,7 @@ It can change later results by changing relative phase.
 
 **Mistake 2:** H always creates randomness.
 
-H maps (|0\rangle) and (|1\rangle) to equal superpositions, but it maps (|+\rangle) to definite (|0\rangle).
+H maps $|0\rangle$ and $|1\rangle$ to equal superpositions, but it maps $|+\rangle$ to definite $|0\rangle$.
 
 **Mistake 3:** CX copies any qubit.
 
@@ -1940,8 +1929,8 @@ It copies computational-basis information in certain cases. Applied to a superpo
 
 ### 0.9.12 Quick check
 
-1. Which gate swaps the amplitudes of (|0\rangle) and (|1\rangle)?
-2. Which gate changes (|+\rangle) into (|-\rangle)?
+1. Which gate swaps the amplitudes of $|0\rangle$ and $|1\rangle$?
+2. Which gate changes $|+\rangle$ into $|-\rangle$?
 3. Why must ideal gate matrices preserve vector length?
 
 ---
@@ -1954,18 +1943,18 @@ Matrix multiplication tells us how a gate transforms a state.
 
 The gate matrix is written on the left:
 
-[
+$$
 |\psi_{\text{out}}\rangle
-=========================
+=
 
 U|\psi_{\text{in}}\rangle
-]
+$$
 
 Here:
 
-* (U) is the gate matrix;
-* (|\psi_{\text{in}}\rangle) is the input state;
-* (|\psi_{\text{out}}\rangle) is the output state.
+* $U$ is the gate matrix;
+* $|\psi_{\text{in}}\rangle$ is the input state;
+* $|\psi_{\text{out}}\rangle$ is the output state.
 
 The order matters.
 
@@ -1973,226 +1962,226 @@ The order matters.
 
 Consider:
 
-[
+$$
 \begin{bmatrix}
-a&b\
+a&b\\
 c&d
 \end{bmatrix}
 \begin{bmatrix}
-x\
+x\\
 y
 \end{bmatrix}
-]
+$$
 
 The output’s first entry is:
 
-[
+$$
 ax+by
-]
+$$
 
 The output’s second entry is:
 
-[
+$$
 cx+dy
-]
+$$
 
 Therefore:
 
-[
+$$
 \begin{bmatrix}
-a&b\
+a&b\\
 c&d
 \end{bmatrix}
 \begin{bmatrix}
-x\
+x\\
 y
 \end{bmatrix}
-=============
+=
 
 \begin{bmatrix}
-ax+by\
+ax+by\\
 cx+dy
 \end{bmatrix}
-]
+$$
 
 Each output entry is formed by multiplying one matrix row with the input column and adding the results.
 
-### 0.10.3 Worked example: X acting on (|0\rangle)
+### 0.10.3 Worked example: X acting on $|0\rangle$
 
 The X gate is:
 
-[
+$$
 X=
 \begin{bmatrix}
-0&1\
+0&1\\
 1&0
 \end{bmatrix}
-]
+$$
 
-The state (|0\rangle) is:
+The state $|0\rangle$ is:
 
-[
+$$
 |0\rangle=
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
 Multiply:
 
-[
+$$
 X|0\rangle
-==========
+=
 
 \begin{bmatrix}
-0&1\
+0&1\\
 1&0
 \end{bmatrix}
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
 First output entry:
 
-[
+$$
 0(1)+1(0)=0
-]
+$$
 
 Second output entry:
 
-[
+$$
 1(1)+0(0)=1
-]
+$$
 
 Therefore:
 
-[
+$$
 X|0\rangle=
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-=============
+=
 
 |1\rangle
-]
+$$
 
-### 0.10.4 Worked example: H acting on (|0\rangle)
+### 0.10.4 Worked example: H acting on $|0\rangle$
 
-[
+$$
 H=
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1&1\
+1&1\\
 1&-1
 \end{bmatrix}
-]
+$$
 
 Multiply:
 
-[
+$$
 H|0\rangle
-==========
+=
 
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1&1\
+1&1\\
 1&-1
 \end{bmatrix}
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
 First entry:
 
-[
+$$
 \frac{1}{\sqrt{2}}\left(1(1)+1(0)\right)
-========================================
+=
 
 \frac{1}{\sqrt{2}}
-]
+$$
 
 Second entry:
 
-[
+$$
 \frac{1}{\sqrt{2}}\left(1(1)-1(0)\right)
-========================================
+=
 
 \frac{1}{\sqrt{2}}
-]
+$$
 
 Therefore:
 
-[
+$$
 H|0\rangle=
 \begin{bmatrix}
-1/\sqrt{2}\
+1/\sqrt{2}\\
 1/\sqrt{2}
 \end{bmatrix}
-=============
+=
 
 |+\rangle
-]
+$$
 
-### 0.10.5 Worked example: H acting on (|-\rangle)
+### 0.10.5 Worked example: H acting on $|-\rangle$
 
 Start with:
 
-[
+$$
 |-\rangle=
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1\
+1\\
 -1
 \end{bmatrix}
-]
+$$
 
 Then:
 
-[
+$$
 H|-\rangle
-==========
+=
 
 \frac{1}{2}
 \begin{bmatrix}
-1&1\
+1&1\\
 1&-1
 \end{bmatrix}
 \begin{bmatrix}
-1\
+1\\
 -1
 \end{bmatrix}
-]
+$$
 
 First entry:
 
-[
+$$
 \frac{1}{2}(1-1)=0
-]
+$$
 
 Second entry:
 
-[
+$$
 \frac{1}{2}(1+1)=1
-]
+$$
 
 Therefore:
 
-[
+$$
 H|-\rangle=
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-=============
+=
 
 |1\rangle
-]
+$$
 
 The negative phase has been converted into a definite measurement difference.
 
@@ -2200,9 +2189,9 @@ The negative phase has been converted into a definite measurement difference.
 
 If X is applied first and H second:
 
-[
+$$
 |\psi_{\text{out}}\rangle=HX|\psi_{\text{in}}\rangle
-]
+$$
 
 The rightmost matrix acts first.
 
@@ -2240,10 +2229,10 @@ Expected output:
 
 Line by line:
 
-* `zero` stores the vector for (|0\rangle).
+* `zero` stores the vector for $|0\rangle$.
 * `x_gate` stores the X matrix.
 * Python’s `@` operator performs matrix multiplication.
-* The result is the vector for (|1\rangle).
+* The result is the vector for $|1\rangle$.
 
 ### 0.10.8 Common misunderstanding
 
@@ -2251,32 +2240,32 @@ Matrix multiplication is not performed entry by entry.
 
 For example:
 
-[
+$$
 \begin{bmatrix}
-a&b\
+a&b\\
 c&d
 \end{bmatrix}
 \begin{bmatrix}
-x\
+x\\
 y
 \end{bmatrix}
-]
+$$
 
 does not become:
 
-[
+$$
 \begin{bmatrix}
-ax\
+ax\\
 dy
 \end{bmatrix}
-]
+$$
 
 Each output entry uses a complete row.
 
 ### 0.10.9 Quick check
 
-1. In (HX|\psi\rangle), which gate acts first?
-2. Calculate (X|1\rangle).
+1. In $HX|\psi\rangle$, which gate acts first?
+2. Calculate $X|1\rangle$.
 3. Why can a phase change become visible after a Hadamard gate?
 
 ---
@@ -2299,15 +2288,15 @@ For normalised quantum states:
 
 A ket is a column vector:
 
-[
+$$
 |\psi\rangle
-]
+$$
 
 The corresponding **bra** is written:
 
-[
+$$
 \langle\psi|
-]
+$$
 
 To obtain the bra:
 
@@ -2316,176 +2305,173 @@ To obtain the bra:
 
 If:
 
-[
+$$
 |\psi\rangle=
 \begin{bmatrix}
-a\
+a\\
 b
 \end{bmatrix}
-]
+$$
 
 then:
 
-[
+$$
 \langle\psi|=
 \begin{bmatrix}
 a^*&b^*
 \end{bmatrix}
-]
+$$
 
 ### 0.11.3 Formal definition
 
-The inner product between (|\phi\rangle) and (|\psi\rangle) is:
+The inner product between $|\phi\rangle$ and $|\psi\rangle$ is:
 
-[
+$$
 \langle\phi|\psi\rangle
-]
+$$
 
 If:
 
-[
+$$
 |\phi\rangle=
 \begin{bmatrix}
-a\
+a\\
 b
 \end{bmatrix}
-]
+$$
 
 and:
 
-[
+$$
 |\psi\rangle=
 \begin{bmatrix}
-c\
+c\\
 d
 \end{bmatrix}
-]
+$$
 
 then:
 
-[
+$$
 \langle\phi|\psi\rangle=a^*c+b^*d
-]
+$$
 
 ### 0.11.4 Worked example: basis-state overlap
 
 Calculate:
 
-[
+$$
 \langle0|1\rangle
-]
+$$
 
 We have:
 
-[
+$$
 \langle0|=
 \begin{bmatrix}
 1&0
 \end{bmatrix}
-]
+$$
 
 and:
 
-[
+$$
 |1\rangle=
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle0|1\rangle
-=================
+=
 
 1(0)+0(1)=0
-]
+$$
 
 The states are orthogonal.
 
 Now calculate:
 
-[
+$$
 \langle0|0\rangle
-]
+$$
 
-# [
+$$
 
 1(1)+0(0)=1
-]
+$$
 
 ### 0.11.5 Inner products and measurement probability
 
-The amplitude for finding (|\psi\rangle) in basis state (|0\rangle) is:
+The amplitude for finding $|\psi\rangle$ in basis state $|0\rangle$ is:
 
-[
+$$
 \langle0|\psi\rangle
-]
+$$
 
 The corresponding probability is:
 
-[
+$$
 |\langle0|\psi\rangle|^2
-]
+$$
 
 For:
 
-[
+$$
 |\psi\rangle=\alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 we obtain:
 
-[
+$$
 \langle0|\psi\rangle=\alpha
-]
+$$
 
 and therefore:
 
-[
+$$
 P(0)=|\alpha|^2
-]
+$$
 
 ### 0.11.6 Worked example
 
 Let:
 
-[
+$$
 |\psi\rangle=
 \frac{3}{5}|0\rangle+
 \frac{4}{5}|1\rangle
-]
+$$
 
 Then:
 
-[
+$$
 \langle1|\psi\rangle
-====================
+=
 
 \begin{bmatrix}
 0&1
 \end{bmatrix}
 \begin{bmatrix}
-3/5\
+3/5\\
 4/5
 \end{bmatrix}
-=============
+=
 
 \frac{4}{5}
-]
+$$
 
 The probability of outcome `1` is:
 
-[
+$$
 \left|\frac{4}{5}\right|^2
-==========================
-
-# \frac{16}{25}
-
-0.64
-]
+= \frac{16}{25}
+= 0.64
+$$
 
 ### 0.11.7 Qiskit implementation
 
@@ -2512,9 +2498,9 @@ State fidelity: 0.5
 
 Line by line:
 
-* `zero.inner(plus)` calculates (\langle0|+\rangle).
-* Its value is (1/\sqrt{2}).
-* Squaring its magnitude gives (1/2).
+* `zero.inner(plus)` calculates $\langle0|+\rangle$.
+* Its value is $1/\sqrt{2}$.
+* Squaring its magnitude gives $1/2$.
 * For pure states, state fidelity equals the squared overlap magnitude.
 
 ### 0.11.8 Common misunderstanding
@@ -2527,7 +2513,7 @@ For complex vectors, the first vector must be complex-conjugated.
 
 1. What does an inner product of zero indicate?
 2. Why must complex conjugation be used?
-3. What is (|\langle1|+\rangle|^2)?
+3. What is $|\langle1|+\rangle|^2$?
 
 ---
 
@@ -2548,40 +2534,40 @@ There are two important kinds of phase:
 
 Consider:
 
-[
+$$
 |\psi\rangle=
 \alpha|0\rangle+\beta|1\rangle
-]
+$$
 
-Now multiply the entire state by (e^{i\gamma}):
+Now multiply the entire state by $e^{i\gamma}$:
 
-[
+$$
 |\psi'\rangle=
 e^{i\gamma}
 \left(
 \alpha|0\rangle+\beta|1\rangle
 \right)
-]
+$$
 
 The same factor multiplies every amplitude.
 
 This is a **global phase**.
 
-The states (|\psi\rangle) and (|\psi'\rangle) represent the same physical pure state.
+The states $|\psi\rangle$ and $|\psi'\rangle$ represent the same physical pure state.
 
 Example:
 
-[
+$$
 |0\rangle
-]
+$$
 
 and:
 
-[
+$$
 -|0\rangle
-]
+$$
 
-differ by a global phase of (-1=e^{i\pi}).
+differ by a global phase of $-1=e^{i\pi}$.
 
 They give identical predictions in every experiment.
 
@@ -2589,19 +2575,19 @@ They give identical predictions in every experiment.
 
 Consider:
 
-[
+$$
 |+\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 and:
 
-[
+$$
 |-\rangle=
 \frac{|0\rangle-|1\rangle}{\sqrt{2}}
-]
+$$
 
-The minus sign affects only the (|1\rangle) term.
+The minus sign affects only the $|1\rangle$ term.
 
 This is a relative phase difference.
 
@@ -2611,31 +2597,31 @@ Relative phase is physically meaningful because it affects interference.
 
 Start with:
 
-[
+$$
 |+\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 Apply H:
 
-[
+$$
 H|+\rangle=|0\rangle
-]
+$$
 
 Therefore, measurement returns `0` with certainty.
 
 Now start with:
 
-[
+$$
 |-\rangle=
 \frac{|0\rangle-|1\rangle}{\sqrt{2}}
-]
+$$
 
 Apply H:
 
-[
+$$
 H|-\rangle=|1\rangle
-]
+$$
 
 Measurement now returns `1` with certainty.
 
@@ -2647,23 +2633,23 @@ After H, their relative phases produce opposite deterministic outcomes.
 
 The Z gate transforms:
 
-[
+$$
 \alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 into:
 
-[
+$$
 \alpha|0\rangle-\beta|1\rangle
-]
+$$
 
-It adds a phase of (\pi) to the (|1\rangle) component.
+It adds a phase of $\pi$ to the $|1\rangle$ component.
 
-For (|+\rangle):
+For $|+\rangle$:
 
-[
+$$
 Z|+\rangle=|-\rangle
-]
+$$
 
 ### 0.12.6 Qiskit implementation
 
@@ -2696,10 +2682,10 @@ H then Z then H: {'1': 1.0}
 
 Line by line:
 
-* The first H creates (|+\rangle).
-* Without Z, the second H returns the state to (|0\rangle).
-* With Z, (|+\rangle) becomes (|-\rangle).
-* The final H changes (|-\rangle) into (|1\rangle).
+* The first H creates $|+\rangle$.
+* Without Z, the second H returns the state to $|0\rangle$.
+* With Z, $|+\rangle$ becomes $|-\rangle$.
+* The final H changes $|-\rangle$ into $|1\rangle$.
 * The Z gate’s phase change becomes visible through interference.
 
 ### 0.12.7 Common misunderstandings
@@ -2714,8 +2700,8 @@ Multiplying every amplitude by minus one is only global phase. Negating one comp
 
 ### 0.12.8 Quick check
 
-1. Are (|0\rangle) and (-|0\rangle) physically different pure states?
-2. Are (|+\rangle) and (|-\rangle) physically different?
+1. Are $|0\rangle$ and $-|0\rangle$ physically different pure states?
+2. Are $|+\rangle$ and $|-\rangle$ physically different?
 3. Which gate converts their phase difference into a computational-basis result?
 
 ---
@@ -2730,55 +2716,55 @@ Every point on the surface represents one single-qubit pure state, up to global 
 
 Important points include:
 
-* north pole: (|0\rangle);
-* south pole: (|1\rangle);
-* positive x-direction: (|+\rangle);
-* negative x-direction: (|-\rangle);
-* positive y-direction: ((|0\rangle+i|1\rangle)/\sqrt{2});
-* negative y-direction: ((|0\rangle-i|1\rangle)/\sqrt{2}).
+* north pole: $|0\rangle$;
+* south pole: $|1\rangle$;
+* positive x-direction: $|+\rangle$;
+* negative x-direction: $|-\rangle$;
+* positive y-direction: $(|0\rangle+i|1\rangle)/\sqrt{2}$;
+* negative y-direction: $(|0\rangle-i|1\rangle)/\sqrt{2}$.
 
 ### 0.13.2 Formal representation
 
 Any pure single-qubit state can be written, up to global phase, as:
 
-[
+$$
 |\psi\rangle=
 \cos\left(\frac{\theta}{2}\right)|0\rangle+
 e^{i\phi}
 \sin\left(\frac{\theta}{2}\right)|1\rangle
-]
+$$
 
 Here:
 
-* (\theta) controls the vertical position;
-* (\phi) controls the angle around the vertical axis;
-* (e^{i\phi}) represents relative phase.
+* $\theta$ controls the vertical position;
+* $\phi$ controls the angle around the vertical axis;
+* $e^{i\phi}$ represents relative phase.
 
 The angle ranges are usually:
 
-[
+$$
 0\leq\theta\leq\pi
-]
+$$
 
-[
+$$
 0\leq\phi<2\pi
-]
+$$
 
 ### 0.13.3 Why half-angles appear
 
 The state uses:
 
-[
+$$
 \cos(\theta/2)
-]
+$$
 
 and:
 
-[
+$$
 \sin(\theta/2)
-]
+$$
 
-rather than (\cos\theta) and (\sin\theta).
+rather than $\cos\theta$ and $\sin\theta$.
 
 This relationship arises from the geometry of qubit state space and quantum rotations. You do not need to derive it for this module.
 
@@ -2786,64 +2772,64 @@ This relationship arises from the geometry of qubit state space and quantum rota
 
 For the north pole:
 
-[
+$$
 \theta=0
-]
+$$
 
 Then:
 
-[
+$$
 \cos(0/2)=1
-]
+$$
 
-[
+$$
 \sin(0/2)=0
-]
+$$
 
 Therefore:
 
-[
+$$
 |\psi\rangle=|0\rangle
-]
+$$
 
 For the south pole:
 
-[
+$$
 \theta=\pi
-]
+$$
 
 Then:
 
-[
+$$
 \cos(\pi/2)=0
-]
+$$
 
-[
+$$
 \sin(\pi/2)=1
-]
+$$
 
 Therefore:
 
-[
+$$
 |\psi\rangle=e^{i\phi}|1\rangle
-]
+$$
 
-The factor (e^{i\phi}) is global phase because it multiplies the only nonzero component. The physical state is therefore (|1\rangle).
+The factor $e^{i\phi}$ is global phase because it multiplies the only nonzero component. The physical state is therefore $|1\rangle$.
 
-For (|+\rangle):
+For $|+\rangle$:
 
-[
+$$
 \theta=\frac{\pi}{2}
 \quad\text{and}\quad
 \phi=0
-]
+$$
 
 This gives:
 
-[
+$$
 |\psi\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 ### 0.13.5 Gates as rotations
 
@@ -2851,9 +2837,9 @@ Single-qubit gates can often be visualised as rotations of the Bloch vector.
 
 For example:
 
-* X rotates by (\pi) around the x-axis;
-* Y rotates by (\pi) around the y-axis;
-* Z rotates by (\pi) around the z-axis;
+* X rotates by $\pi$ around the x-axis;
+* Y rotates by $\pi$ around the y-axis;
+* Z rotates by $\pi$ around the z-axis;
 * rotation gates such as `rx`, `ry`, and `rz` rotate by specified angles.
 
 The Hadamard gate is also a rotation, although describing it only as a rotation around x, y, or z would be incomplete.
@@ -2887,7 +2873,7 @@ print(figure)
 
 Line by line:
 
-* `Statevector.from_label("+")` creates (|+\rangle).
+* `Statevector.from_label("+")` creates $|+\rangle$.
 * `draw(output="bloch")` requests a Bloch-sphere visualisation.
 * In a graphical notebook environment, Qiskit displays the Bloch sphere.
 * In a plain terminal, graphical display depends on the environment.
@@ -2914,17 +2900,17 @@ A system of multiple qubits needs amplitudes for every possible combined basis s
 
 Two qubits have four basis states:
 
-[
+$$
 |00\rangle,\ |01\rangle,\ |10\rangle,\ |11\rangle
-]
+$$
 
 Three qubits have eight basis states.
 
-In general, (n) qubits have:
+In general, $n$ qubits have:
 
-[
+$$
 2^n
-]
+$$
 
 computational basis states.
 
@@ -2936,15 +2922,15 @@ The tensor product combines state spaces.
 
 It is written using:
 
-[
+$$
 \otimes
-]
+$$
 
 For example:
 
-[
+$$
 |0\rangle\otimes|1\rangle=|01\rangle
-]
+$$
 
 The tensor product of vectors is also called the Kronecker product.
 
@@ -2967,92 +2953,92 @@ The analogy stops because quantum amplitudes can interfere, and some joint quant
 
 Let:
 
-[
+$$
 |0\rangle=
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
 and:
 
-[
+$$
 |1\rangle=
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
 Then:
 
-[
+$$
 |0\rangle\otimes|1\rangle
-=========================
+=
 
 \begin{bmatrix}
 1
 \begin{bmatrix}
-0\
+0\\
 1
-\end{bmatrix}\
+\end{bmatrix}\\
 0
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
 \end{bmatrix}
-]
+$$
 
 This gives:
 
-[
+$$
 \begin{bmatrix}
-0\
-1\
-0\
+0\\
+1\\
+0\\
 0
 \end{bmatrix}
-]
+$$
 
 which represents:
 
-[
+$$
 |01\rangle
-]
+$$
 
 ### 0.14.5 General two-qubit product state
 
 Suppose:
 
-[
+$$
 |\psi\rangle=
 \alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 and:
 
-[
+$$
 |\phi\rangle=
 \gamma|0\rangle+\delta|1\rangle
-]
+$$
 
 Their joint state is:
 
-[
+$$
 |\psi\rangle\otimes|\phi\rangle
-]
+$$
 
 Expanding:
 
-# [
+$$
 
 \alpha\gamma|00\rangle+
 \alpha\delta|01\rangle+
 \beta\gamma|10\rangle+
 \beta\delta|11\rangle
-]
+$$
 
 The joint amplitudes are products of the individual amplitudes.
 
@@ -3070,26 +3056,26 @@ flowchart LR
     C --> D
 ```
 
-### 0.14.7 Worked example: (|+\rangle\otimes|0\rangle)
+### 0.14.7 Worked example: $|+\rangle\otimes|0\rangle$
 
-[
+$$
 |+\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 Therefore:
 
-[
+$$
 |+\rangle\otimes|0\rangle
-=========================
+=
 
 \frac{|00\rangle+|10\rangle}{\sqrt{2}}
-]
+$$
 
 The possible outcomes are:
 
-* `00` with probability (1/2);
-* `10` with probability (1/2).
+* `00` with probability $1/2$;
+* `10` with probability $1/2$.
 
 The second qubit is always zero in the written mathematical order used here.
 
@@ -3117,7 +3103,7 @@ not:
 10
 ```
 
-Qiskit stores the statevector amplitude at index (x) for basis state (|x\rangle), with qubit zero on the right side of tensor-product labels.
+Qiskit stores the statevector amplitude at index $x$ for basis state $|x\rangle$, with qubit zero on the right side of tensor-product labels.
 
 ### 0.14.9 Qiskit implementation
 
@@ -3145,7 +3131,7 @@ Expected probability dictionary:
 
 Line by line:
 
-* Both qubits begin in (|0\rangle), giving (|00\rangle).
+* Both qubits begin in $|0\rangle$, giving $|00\rangle$.
 * H acts on qubit zero.
 * Qiskit prints qubit one on the left and qubit zero on the right.
 * Therefore, qubit zero changing produces `00` and `01`.
@@ -3217,20 +3203,20 @@ Entanglement occurs when the state of a multi-qubit system cannot be separated i
 
 Consider:
 
-[
+$$
 |\Phi^+\rangle=
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 This state says that the joint system has amplitudes for `00` and `11`.
 
 It cannot be written as:
 
-[
+$$
 |\psi\rangle\otimes|\phi\rangle
-]
+$$
 
-for any two single-qubit states (|\psi\rangle) and (|\phi\rangle).
+for any two single-qubit states $|\psi\rangle$ and $|\phi\rangle$.
 
 The pair has a well-defined joint quantum state, while each qubit alone does not have its own pure statevector.
 
@@ -3250,9 +3236,9 @@ A pure state of two subsystems is entangled if it cannot be expressed as a tenso
 
 A separable pure state has the form:
 
-[
+$$
 |\psi\rangle_A\otimes|\phi\rangle_B
-]
+$$
 
 An entangled pure state does not.
 
@@ -3260,51 +3246,51 @@ An entangled pure state does not.
 
 Suppose:
 
-[
+$$
 |\psi\rangle=
 a|0\rangle+b|1\rangle
-]
+$$
 
 and:
 
-[
+$$
 |\phi\rangle=
 c|0\rangle+d|1\rangle
-]
+$$
 
 Their product is:
 
-[
+$$
 ac|00\rangle+ad|01\rangle+bc|10\rangle+bd|11\rangle
-]
+$$
 
-For (|\Phi^+\rangle), we would need:
+For $|\Phi^+\rangle$, we would need:
 
-[
+$$
 ac=\frac{1}{\sqrt{2}}
-]
+$$
 
-[
+$$
 ad=0
-]
+$$
 
-[
+$$
 bc=0
-]
+$$
 
-[
+$$
 bd=\frac{1}{\sqrt{2}}
-]
+$$
 
-The first and last equations require (a,b,c,d) to be nonzero.
+The first and last equations require $a,b,c,d$ to be nonzero.
 
-But then (ad) and (bc) cannot both be zero.
+But then $ad$ and $bc$ cannot both be zero.
 
 Therefore, the Bell state cannot be a product state.
 
 ### 0.15.5 Correlation without communication
 
-If both qubits in (|\Phi^+\rangle) are measured in the computational basis, the results agree:
+If both qubits in $|\Phi^+\rangle$ are measured in the computational basis, the results agree:
 
 * `00`;
 * or `11`.
@@ -3343,11 +3329,11 @@ Expected probabilities:
 
 Line by line:
 
-* The initial state is (|00\rangle).
-* H on qubit zero creates a superposition involving (|00\rangle) and (|01\rangle) in Qiskit ordering.
+* The initial state is $|00\rangle$.
+* H on qubit zero creates a superposition involving $|00\rangle$ and $|01\rangle$ in Qiskit ordering.
 * CX uses qubit zero as control and qubit one as target.
 * The `q0=1` branch flips qubit one.
-* The output becomes ((|00\rangle+|11\rangle)/\sqrt{2}).
+* The output becomes $(|00\rangle+|11\rangle)/\sqrt{2}$.
 
 ### 0.15.7 Common misunderstandings
 
@@ -3377,61 +3363,61 @@ The complete pair has a pure statevector, but the individual qubits are describe
 
 The four standard Bell states are:
 
-[
+$$
 |\Phi^+\rangle=
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
-[
+$$
 |\Phi^-\rangle=
 \frac{|00\rangle-|11\rangle}{\sqrt{2}}
-]
+$$
 
-[
+$$
 |\Psi^+\rangle=
 \frac{|01\rangle+|10\rangle}{\sqrt{2}}
-]
+$$
 
-[
+$$
 |\Psi^-\rangle=
 \frac{|01\rangle-|10\rangle}{\sqrt{2}}
-]
+$$
 
 They form an orthonormal basis for the two-qubit state space.
 
-### 0.16.2 Building (|\Phi^+\rangle)
+### 0.16.2 Building $|\Phi^+\rangle$
 
 Start with:
 
-[
+$$
 |00\rangle
-]
+$$
 
 Apply H to the first qubit:
 
-[
+$$
 |00\rangle
 \rightarrow
 \frac{|00\rangle+|10\rangle}{\sqrt{2}}
-]
+$$
 
 Using the first qubit as CX control and the second as target:
 
-[
+$$
 |00\rangle\rightarrow|00\rangle
-]
+$$
 
-[
+$$
 |10\rangle\rightarrow|11\rangle
-]
+$$
 
 Therefore:
 
-[
+$$
 \frac{|00\rangle+|10\rangle}{\sqrt{2}}
 \rightarrow
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 ### 0.16.3 Bell-state circuit
 
@@ -3452,35 +3438,35 @@ flowchart LR
 
 For:
 
-[
+$$
 |\Phi^+\rangle=
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 the amplitudes are:
 
-* (|00\rangle): (1/\sqrt{2});
-* (|01\rangle): (0);
-* (|10\rangle): (0);
-* (|11\rangle): (1/\sqrt{2}).
+* $|00\rangle$: $1/\sqrt{2}$;
+* $|01\rangle$: $0$;
+* $|10\rangle$: $0$;
+* $|11\rangle$: $1/\sqrt{2}$.
 
 The probabilities are:
 
-[
+$$
 P(00)=\frac{1}{2}
-]
+$$
 
-[
+$$
 P(01)=0
-]
+$$
 
-[
+$$
 P(10)=0
-]
+$$
 
-[
+$$
 P(11)=\frac{1}{2}
-]
+$$
 
 ### 0.16.5 Qiskit implementation
 
@@ -3555,8 +3541,8 @@ It predicts correlations that depend on the chosen measurement bases.
 ### 0.16.8 Quick check
 
 1. Name the four Bell states.
-2. Which gates create (|\Phi^+\rangle) from (|00\rangle)?
-3. Which computational-basis outcomes are impossible for (|\Phi^+\rangle)?
+2. Which gates create $|\Phi^+\rangle$ from $|00\rangle$?
+3. Which computational-basis outcomes are impossible for $|\Phi^+\rangle$?
 
 ---
 
@@ -3568,26 +3554,26 @@ An observable represents a measurable physical quantity.
 
 In quantum computing, common observables include the Pauli operators:
 
-[
+$$
 X,\quad Y,\quad Z
-]
+$$
 
 An observable has possible measurement values called **eigenvalues**.
 
 For the Pauli observables, the eigenvalues are:
 
-[
+$$
 +1
 \quad\text{and}\quad
 -1
-]
+$$
 
 ### 0.17.2 Everyday analogy
 
 Suppose you repeatedly measure the result of an experiment and encode outcomes as:
 
-* success: (+1);
-* failure: (-1).
+* success: $+1$;
+* failure: $-1$.
 
 The average of many results is an expectation value.
 
@@ -3597,39 +3583,39 @@ The analogy stops because a quantum observable also determines the measurement b
 
 The Pauli-Z observable is:
 
-[
+$$
 Z=
 \begin{bmatrix}
-1&0\
+1&0\\
 0&-1
 \end{bmatrix}
-]
+$$
 
 Its computational-basis eigenstates are:
 
-[
+$$
 Z|0\rangle=+|0\rangle
-]
+$$
 
-[
+$$
 Z|1\rangle=-|1\rangle
-]
+$$
 
 Therefore, a Z measurement can be interpreted as assigning:
 
-* outcome (|0\rangle): value (+1);
-* outcome (|1\rangle): value (-1).
+* outcome $|0\rangle$: value $+1$;
+* outcome $|1\rangle$: value $-1$.
 
 ### 0.17.4 Expectation value
 
-For a state (|\psi\rangle) and observable (A), the expectation value is:
+For a state $|\psi\rangle$ and observable $A$, the expectation value is:
 
-[
+$$
 \langle A\rangle
-================
+=
 
 \langle\psi|A|\psi\rangle
-]
+$$
 
 This is the average value predicted over many repetitions.
 
@@ -3639,128 +3625,128 @@ It does not generally mean that one individual measurement returns the expectati
 
 For a Z measurement:
 
-[
+$$
 \langle Z\rangle=
 (+1)P(0)+(-1)P(1)
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle Z\rangle=P(0)-P(1)
-]
+$$
 
 ### 0.17.6 Worked examples
 
-For (|0\rangle):
+For $|0\rangle$:
 
-[
+$$
 P(0)=1,\quad P(1)=0
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle Z\rangle=1-0=1
-]
+$$
 
-For (|1\rangle):
+For $|1\rangle$:
 
-[
+$$
 P(0)=0,\quad P(1)=1
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle Z\rangle=0-1=-1
-]
+$$
 
-For (|+\rangle):
+For $|+\rangle$:
 
-[
+$$
 P(0)=\frac{1}{2},\quad P(1)=\frac{1}{2}
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle Z\rangle=
 \frac{1}{2}-\frac{1}{2}=0
-]
+$$
 
 ### 0.17.7 Matrix calculation
 
 For:
 
-[
+$$
 |\psi\rangle=
 \begin{bmatrix}
-\alpha\
+\alpha\\
 \beta
 \end{bmatrix}
-]
+$$
 
 first calculate:
 
-[
+$$
 Z|\psi\rangle=
 \begin{bmatrix}
-1&0\
+1&0\\
 0&-1
 \end{bmatrix}
 \begin{bmatrix}
-\alpha\
+\alpha\\
 \beta
 \end{bmatrix}
-=============
+=
 
 \begin{bmatrix}
-\alpha\
+\alpha\\
 -\beta
 \end{bmatrix}
-]
+$$
 
 Then multiply by:
 
-[
+$$
 \langle\psi|=
 \begin{bmatrix}
 \alpha^*&\beta^*
 \end{bmatrix}
-]
+$$
 
 This gives:
 
-[
+$$
 \langle Z\rangle
-================
+=
 
 |\alpha|^2-|\beta|^2
-]
+$$
 
 ### 0.17.8 Two-qubit observables
 
 An observable such as:
 
-[
+$$
 Z\otimes Z
-]
+$$
 
 often written `ZZ`, measures parity-like correlation.
 
 Its values are:
 
-* `00`: (+1);
-* `01`: (-1);
-* `10`: (-1);
-* `11`: (+1).
+* `00`: $+1$;
+* `01`: $-1$;
+* `10`: $-1$;
+* `11`: $+1$.
 
-For (|\Phi^+\rangle), only `00` and `11` occur, so:
+For $|\Phi^+\rangle$, only `00` and `11` occur, so:
 
-[
+$$
 \langle ZZ\rangle=1
-]
+$$
 
 This indicates perfect matching correlation in the Z basis.
 
@@ -3788,8 +3774,8 @@ This means the expectation value is zero, with no imaginary component.
 Line by line:
 
 * `Pauli("Z")` represents the Pauli-Z observable.
-* `expectation_value()` calculates (\langle\psi|Z|\psi\rangle).
-* For (|+\rangle), the positive and negative Z outcomes are equally likely.
+* `expectation_value()` calculates $\langle\psi|Z|\psi\rangle$.
+* For $|+\rangle$, the positive and negative Z outcomes are equally likely.
 * Their average is zero.
 
 ### 0.17.10 Qiskit implementation using Estimator
@@ -3820,7 +3806,7 @@ Expected result:
 
 Line by line:
 
-* The circuit prepares (|+\rangle).
+* The circuit prepares $|+\rangle$.
 * `SparsePauliOp("Z")` represents the Z observable.
 * `StatevectorEstimator` is Qiskit’s local V2 reference estimator.
 * A primitive input item contains the circuit and observable.
@@ -3842,13 +3828,13 @@ Use Estimator when you want:
 
 * an expectation value;
 * an average observable value;
-* quantities such as (\langle Z\rangle), (\langle XX\rangle), or Hamiltonian expectations.
+* quantities such as $\langle Z\rangle$, $\langle XX\rangle$, or Hamiltonian expectations.
 
 ### 0.17.12 Common misunderstandings
 
 **Mistake 1:** An expectation value must be one possible measurement outcome.
 
-A Pauli measurement returns (+1) or (-1), but its expectation may be any number between them.
+A Pauli measurement returns $+1$ or $-1$, but its expectation may be any number between them.
 
 **Mistake 2:** An expectation value is a probability.
 
@@ -3861,7 +3847,7 @@ Estimator returns expectation-value estimates and associated metadata.
 ### 0.17.13 Quick check
 
 1. What are the eigenvalues of Pauli Z?
-2. What is (\langle Z\rangle) for (|1\rangle)?
+2. What is $\langle Z\rangle$ for $|1\rangle$?
 3. When should you use Estimator rather than Sampler?
 
 ---
@@ -3874,23 +3860,23 @@ A pure state contains the most complete quantum description allowed by the model
 
 It can be represented by a normalised statevector:
 
-[
+$$
 |\psi\rangle
-]
+$$
 
 Examples include:
 
-[
+$$
 |0\rangle
-]
+$$
 
-[
+$$
 |+\rangle
-]
+$$
 
-[
+$$
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 ### 0.18.2 Mixed states
 
@@ -3898,29 +3884,29 @@ A mixed state represents statistical uncertainty over quantum states or the redu
 
 Suppose a source prepares:
 
-* (|0\rangle) with probability (1/2);
-* (|1\rangle) with probability (1/2).
+* $|0\rangle$ with probability $1/2$;
+* $|1\rangle$ with probability $1/2$.
 
-This is not the same as (|+\rangle).
+This is not the same as $|+\rangle$.
 
 Both produce 50–50 results in the computational basis, but they behave differently in the X basis.
 
 ### 0.18.3 Distinguishing a mixture from a superposition
 
-For (|+\rangle):
+For $|+\rangle$:
 
-[
+$$
 H|+\rangle=|0\rangle
-]
+$$
 
 Therefore, after H, measurement returns `0` with certainty.
 
-For an equal classical mixture of (|0\rangle) and (|1\rangle):
+For an equal classical mixture of $|0\rangle$ and $|1\rangle$:
 
-* half the preparations are (|0\rangle), which H maps to (|+\rangle);
-* half are (|1\rangle), which H maps to (|-\rangle).
+* half the preparations are $|0\rangle$, which H maps to $|+\rangle$;
+* half are $|1\rangle$, which H maps to $|-\rangle$.
 
-Both (|+\rangle) and (|-\rangle) produce 50–50 computational-basis outcomes.
+Both $|+\rangle$ and $|-\rangle$ produce 50–50 computational-basis outcomes.
 
 Therefore, the mixture remains 50–50 after H.
 
@@ -3932,160 +3918,160 @@ A density matrix represents both pure and mixed states.
 
 For a pure state:
 
-[
+$$
 \rho=|\psi\rangle\langle\psi|
-]
+$$
 
-The Greek letter (\rho), pronounced “rho,” commonly names a density matrix.
+The Greek letter $\rho$, pronounced “rho,” commonly names a density matrix.
 
-### 0.18.5 Worked example: density matrix of (|0\rangle)
+### 0.18.5 Worked example: density matrix of $|0\rangle$
 
-[
+$$
 |0\rangle=
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
-[
+$$
 \langle0|=
 \begin{bmatrix}
 1&0
 \end{bmatrix}
-]
+$$
 
 Take the outer product:
 
-[
+$$
 |0\rangle\langle0|
-==================
+=
 
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
 \begin{bmatrix}
 1&0
 \end{bmatrix}
-]
+$$
 
 Therefore:
 
-[
+$$
 \rho_0=
 \begin{bmatrix}
-1&0\
+1&0\\
 0&0
 \end{bmatrix}
-]
+$$
 
-### 0.18.6 Density matrix of (|+\rangle)
+### 0.18.6 Density matrix of $|+\rangle$
 
-[
+$$
 |+\rangle=
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1\
+1\\
 1
 \end{bmatrix}
-]
+$$
 
 Therefore:
 
-[
+$$
 \rho_+
-======
+=
 
 |+\rangle\langle+|
-]
+$$
 
-# [
+$$
 
 \frac{1}{2}
 \begin{bmatrix}
-1\
+1\\
 1
 \end{bmatrix}
 \begin{bmatrix}
 1&1
 \end{bmatrix}
-]
+$$
 
-# [
+$$
 
 \frac{1}{2}
 \begin{bmatrix}
-1&1\
+1&1\\
 1&1
 \end{bmatrix}
-]
+$$
 
 The off-diagonal entries represent coherence between the basis states.
 
 ### 0.18.7 Equal classical mixture
 
-For an equal mixture of (|0\rangle) and (|1\rangle):
+For an equal mixture of $|0\rangle$ and $|1\rangle$:
 
-[
+$$
 \rho_{\text{mixed}}
-===================
+=
 
 \frac{1}{2}|0\rangle\langle0|
 +
 \frac{1}{2}|1\rangle\langle1|
-]
+$$
 
 This gives:
 
-[
+$$
 \rho_{\text{mixed}}
-===================
+=
 
 \frac{1}{2}
 \begin{bmatrix}
-1&0\
+1&0\\
 0&0
 \end{bmatrix}
 +
 \frac{1}{2}
 \begin{bmatrix}
-0&0\
+0&0\\
 0&1
 \end{bmatrix}
-]
+$$
 
-# [
+$$
 
 \begin{bmatrix}
-1/2&0\
+1/2&0\\
 0&1/2
 \end{bmatrix}
-]
+$$
 
 Compare:
 
-[
+$$
 \rho_+
-======
+=
 
 \begin{bmatrix}
-1/2&1/2\
+1/2&1/2\\
 1/2&1/2
 \end{bmatrix}
-]
+$$
 
 with:
 
-[
+$$
 \rho_{\text{mixed}}
-===================
+=
 
 \begin{bmatrix}
-1/2&0\
+1/2&0\\
 0&1/2
 \end{bmatrix}
-]
+$$
 
 They have the same diagonal probabilities but different off-diagonal coherence.
 
@@ -4101,65 +4087,65 @@ The trace is the sum of diagonal entries.
 
 For:
 
-[
+$$
 \begin{bmatrix}
-1/2&0\
+1/2&0\\
 0&1/2
 \end{bmatrix}
-]
+$$
 
 the trace is:
 
-[
+$$
 \frac{1}{2}+\frac{1}{2}=1
-]
+$$
 
 ### 0.18.9 Purity
 
 Purity is calculated as:
 
-[
+$$
 \operatorname{Tr}(\rho^2)
-]
+$$
 
 For a pure state:
 
-[
+$$
 \operatorname{Tr}(\rho^2)=1
-]
+$$
 
 For a mixed state, the value is less than one.
 
 For the maximally mixed single-qubit state:
 
-[
+$$
 \rho=
 \frac{I}{2}
-]
+$$
 
 the purity is:
 
-[
+$$
 \frac{1}{2}
-]
+$$
 
 ### 0.18.10 Reduced states and entanglement
 
 The Bell state is a pure two-qubit state:
 
-[
+$$
 |\Phi^+\rangle=
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 However, if you describe only one of its qubits and ignore the other, the reduced state is:
 
-[
+$$
 \rho_{\text{one qubit}}
-=======================
+=
 
 \frac{I}{2}
-]
+$$
 
 Thus:
 
@@ -4196,7 +4182,7 @@ Expected purity:
 Line by line:
 
 * `Statevector.from_label("+")` creates the pure plus state.
-* `DensityMatrix(plus_state)` converts it to (|+\rangle\langle+|).
+* `DensityMatrix(plus_state)` converts it to $|+\rangle\langle+|$.
 * The off-diagonal entries are nonzero.
 * `purity()` returns one because the state is pure.
 
@@ -4232,7 +4218,7 @@ Qiskit’s `DensityMatrix` class can be constructed from a statevector, circuit,
 
 ### 0.18.12 Common misunderstandings
 
-**Mistake 1:** A 50–50 mixture is the same as (|+\rangle).
+**Mistake 1:** A 50–50 mixture is the same as $|+\rangle$.
 
 They agree only for some measurements.
 
@@ -4247,7 +4233,7 @@ Subsystems of an entangled pure state can be mixed.
 ### 0.18.13 Quick check
 
 1. What is the density matrix of a pure state?
-2. How does (|+\rangle) differ from an equal mixture of (|0\rangle) and (|1\rangle)?
+2. How does $|+\rangle$ differ from an equal mixture of $|0\rangle$ and $|1\rangle$?
 3. What purity value identifies a pure state?
 
 ---
@@ -4303,7 +4289,7 @@ It is appropriate when:
 * you want ideal amplitudes;
 * the system is small enough for classical simulation.
 
-A statevector contains (2^n) complex values for (n) qubits, so simulation cost grows exponentially.
+A statevector contains $2^n$ complex values for $n$ qubits, so simulation cost grows exponentially.
 
 ### 0.19.3 `DensityMatrix`
 
@@ -4329,11 +4315,11 @@ It is useful for:
 * open-system reasoning;
 * comparing coherent and incoherent states.
 
-A density matrix for (n) qubits has dimensions:
+A density matrix for $n$ qubits has dimensions:
 
-[
+$$
 2^n\times2^n
-]
+$$
 
 It therefore requires substantially more classical memory than a statevector.
 
@@ -4494,36 +4480,36 @@ It is a program description. You must pass it to a state representation, simulat
 
 We will build the Bell state:
 
-[
+$$
 |\Phi^+\rangle=
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 ### Step 1: Define the initial state
 
 A two-qubit Qiskit circuit begins in:
 
-[
+$$
 |00\rangle
-]
+$$
 
 Its statevector is:
 
-[
+$$
 |00\rangle=
 \begin{bmatrix}
-1\
-0\
-0\
+1\\
+0\\
+0\\
 0
 \end{bmatrix}
-]
+$$
 
 The basis ordering is:
 
-[
+$$
 |00\rangle,\ |01\rangle,\ |10\rangle,\ |11\rangle
-]
+$$
 
 ### Step 2: Apply the Hadamard gate
 
@@ -4531,30 +4517,30 @@ Apply H to the first logical control qubit.
 
 In conventional left-to-right mathematical notation:
 
-[
+$$
 H|0\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 Therefore:
 
-[
+$$
 |00\rangle
 \rightarrow
 \frac{|00\rangle+|10\rangle}{\sqrt{2}}
-]
+$$
 
 The statevector becomes:
 
-[
+$$
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1\
-0\
-1\
+1\\
+0\\
+1\\
 0
 \end{bmatrix}
-]
+$$
 
 In Qiskit, when H is applied to `q0`, the nonzero displayed states are `00` and `01` because Qiskit places `q0` on the right. The physical reasoning is unchanged; only the written bit order differs.
 
@@ -4564,71 +4550,71 @@ Use the superposed qubit as control.
 
 For each branch:
 
-[
+$$
 |00\rangle\rightarrow|00\rangle
-]
+$$
 
-[
+$$
 |10\rangle\rightarrow|11\rangle
-]
+$$
 
 Therefore:
 
-[
+$$
 \frac{|00\rangle+|10\rangle}{\sqrt{2}}
 \rightarrow
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 The final statevector is:
 
-[
+$$
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1\
-0\
-0\
+1\\
+0\\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
 ### Step 4: Predict measurement outcomes
 
 The amplitudes are:
 
-[
+$$
 \alpha_{00}=\frac{1}{\sqrt{2}}
-]
+$$
 
-[
+$$
 \alpha_{01}=0
-]
+$$
 
-[
+$$
 \alpha_{10}=0
-]
+$$
 
-[
+$$
 \alpha_{11}=\frac{1}{\sqrt{2}}
-]
+$$
 
 Square the magnitudes:
 
-[
+$$
 P(00)=\frac{1}{2}
-]
+$$
 
-[
+$$
 P(01)=0
-]
+$$
 
-[
+$$
 P(10)=0
-]
+$$
 
-[
+$$
 P(11)=\frac{1}{2}
-]
+$$
 
 We expect only `00` and `11`.
 
@@ -4661,7 +4647,7 @@ Expected exact probabilities:
 
 Line by line:
 
-* `QuantumCircuit(2)` creates two qubits initialised in (|00\rangle).
+* `QuantumCircuit(2)` creates two qubits initialised in $|00\rangle$.
 * `h(0)` gives qubit zero equal zero and one amplitudes.
 * `cx(0, 1)` uses qubit zero as control.
 * `Statevector.from_instruction()` computes the ideal pure state.
@@ -4714,13 +4700,13 @@ Suppose the counts are:
 
 The estimated probabilities are:
 
-[
+$$
 \hat P(00)=\frac{1014}{2000}=0.507
-]
+$$
 
-[
+$$
 \hat P(11)=\frac{986}{2000}=0.493
-]
+$$
 
 The hat indicates an estimate from finite data.
 
@@ -4735,9 +4721,9 @@ Computational-basis correlation alone is not a complete proof of entanglement, b
 
 For the Bell state:
 
-[
+$$
 \langle ZZ\rangle=1
-]
+$$
 
 because both possible outcomes have equal bits.
 
@@ -4782,18 +4768,18 @@ print("Purity:", density.purity())
 
 The density matrix is:
 
-[
+$$
 \rho=
 \frac{1}{2}
 \begin{bmatrix}
-1&0&0&1\
-0&0&0&0\
-0&0&0&0\
+1&0&0&1\\
+0&0&0&0\\
+0&0&0&0\\
 1&0&0&1
 \end{bmatrix}
-]
+$$
 
-The off-diagonal corner entries represent coherence between (|00\rangle) and (|11\rangle).
+The off-diagonal corner entries represent coherence between $|00\rangle$ and $|11\rangle$.
 
 The complete Bell state has purity one.
 
@@ -4826,19 +4812,19 @@ Before execution on IBM hardware, circuits must be transpiled into instructions 
 
 ### 1. Treating amplitudes as probabilities
 
-An amplitude of (1/2) gives probability:
+An amplitude of $1/2$ gives probability:
 
-[
+$$
 |1/2|^2=1/4
-]
+$$
 
 ### 2. Forgetting normalisation
 
 A valid pure statevector must satisfy:
 
-[
+$$
 \sum_i|\alpha_i|^2=1
-]
+$$
 
 ### 3. Thinking superposition means two readable answers
 
@@ -4864,11 +4850,11 @@ Gate application requires row-by-column matrix multiplication.
 
 In:
 
-[
+$$
 U_2U_1|\psi\rangle
-]
+$$
 
-(U_1) acts first.
+$U_1$ acts first.
 
 ### 9. Confusing a circuit with its state
 
@@ -4904,15 +4890,15 @@ Density matrices also represent pure states and reduced subsystems.
 
 ### 16. Confusing a pure superposition with a mixed state
 
-[
+$$
 |+\rangle
-]
+$$
 
-is not equivalent to a 50–50 classical mixture of (|0\rangle) and (|1\rangle).
+is not equivalent to a 50–50 classical mixture of $|0\rangle$ and $|1\rangle$.
 
 ### 17. Assuming an expectation value is one observed outcome
 
-A Pauli measurement returns (+1) or (-1), while its expectation can be any number between them.
+A Pauli measurement returns $+1$ or $-1$, while its expectation can be any number between them.
 
 ### 18. Using deprecated primitive interfaces
 
@@ -4926,23 +4912,23 @@ A classical bit has a definite value of zero or one.
 
 A qubit is represented using two computational basis states:
 
-[
+$$
 |0\rangle
 \quad\text{and}\quad
 |1\rangle
-]
+$$
 
 A general single-qubit pure state is:
 
-[
+$$
 |\psi\rangle=\alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 The amplitudes satisfy:
 
-[
+$$
 |\alpha|^2+|\beta|^2=1
-]
+$$
 
 Measurement probabilities are squared amplitude magnitudes.
 
@@ -4952,9 +4938,9 @@ Quantum gates are unitary matrices.
 
 A gate transforms a state through matrix multiplication:
 
-[
+$$
 |\psi_{\text{out}}\rangle=U|\psi_{\text{in}}\rangle
-]
+$$
 
 Inner products measure state overlap.
 
@@ -4964,7 +4950,7 @@ The Bloch sphere visualises pure single-qubit states up to global phase.
 
 Multiple-qubit state spaces are formed using tensor products.
 
-An (n)-qubit statevector contains (2^n) amplitudes.
+An $n$-qubit statevector contains $2^n$ amplitudes.
 
 Entangled states cannot be separated into independent subsystem statevectors.
 
@@ -4974,9 +4960,9 @@ Observables are Hermitian operators representing measurable quantities.
 
 An expectation value is:
 
-[
+$$
 \langle A\rangle=\langle\psi|A|\psi\rangle
-]
+$$
 
 Statevectors describe pure states.
 
@@ -5008,7 +4994,7 @@ One of four maximally entangled two-qubit states.
 A geometric representation of single-qubit states. Pure states lie on its surface.
 
 **Bra**
-The conjugate-transposed form of a ket, written (\langle\psi|).
+The conjugate-transposed form of a ket, written $\langle\psi|$.
 
 **Classical bit**
 A unit of classical information with value zero or one.
@@ -5020,10 +5006,10 @@ The update of a quantum state after measurement to a state consistent with the o
 The result of changing the sign of a complex number’s imaginary part.
 
 **Complex number**
-A number of the form (a+bi).
+A number of the form $a+bi$.
 
 **Computational basis**
-The standard qubit basis consisting of (|0\rangle) and (|1\rangle).
+The standard qubit basis consisting of $|0\rangle$ and $|1\rangle$.
 
 **Controlled-X gate**
 A two-qubit gate that flips the target when the control is one.
@@ -5056,7 +5042,7 @@ A matrix equal to its conjugate transpose. Observables are represented by Hermit
 A complex-valued measure of overlap between vectors.
 
 **Ket**
-A quantum-state vector written as (|\psi\rangle).
+A quantum-state vector written as $|\psi\rangle$.
 
 **Matrix**
 A rectangular arrangement of numbers used to represent transformations and observables.
@@ -5123,7 +5109,7 @@ A reversible matrix that preserves vector norm and total probability.
 3. Why can two states with the same computational-basis probabilities still be different?
 4. What does measurement collapse mean in the ideal projective model?
 5. What is the physical difference between global phase and relative phase?
-6. Why does an (n)-qubit statevector require (2^n) entries?
+6. Why does an $n$-qubit statevector require $2^n$ entries?
 7. What condition makes a pure two-qubit state entangled?
 8. Why does entanglement not allow faster-than-light communication?
 9. What is the difference between Sampler and Estimator?
@@ -5133,114 +5119,114 @@ A reversible matrix that preserves vector norm and total probability.
 
 1. Determine whether the vector below is normalised:
 
-   [
+   $$
    \begin{bmatrix}
-   1/\sqrt{3}\
+   1/\sqrt{3}\\
    \sqrt{2/3}
    \end{bmatrix}
-   ]
+   $$
 
 2. Calculate the measurement probabilities for:
 
-   [
+   $$
    |\psi\rangle=
    \frac{1}{2}|0\rangle+
    \frac{\sqrt{3}}{2}|1\rangle
-   ]
+   $$
 
 3. Calculate the squared magnitude of:
 
-   [
+   $$
    z=\frac{1+i}{\sqrt{2}}
-   ]
+   $$
 
 4. Normalise:
 
-   [
+   $$
    \begin{bmatrix}
-   1\
+   1\\
    i
    \end{bmatrix}
-   ]
+   $$
 
 5. Calculate:
 
-   [
+   $$
    X|1\rangle
-   ]
+   $$
 
 6. Calculate:
 
-   [
+   $$
    Z|+\rangle
-   ]
+   $$
 
 7. Calculate:
 
-   [
+   $$
    H|-\rangle
-   ]
+   $$
 
 8. Calculate:
 
-   [
+   $$
    \langle0|+\rangle
-   ]
+   $$
 
    and its squared magnitude.
 
 9. Expand:
 
-   [
+   $$
    |+\rangle\otimes|1\rangle
-   ]
+   $$
 
-10. Calculate (\langle Z\rangle) for:
+10. Calculate $\langle Z\rangle$ for:
 
-    [
+    $$
     |\psi\rangle=
     \frac{\sqrt{3}}{2}|0\rangle+
     \frac{1}{2}|1\rangle
-    ]
+    $$
 
 ### C. Qiskit coding exercises
 
-1. Create a one-qubit circuit that prepares (|1\rangle).
-2. Create (|+\rangle) and print its statevector.
-3. Create (|-\rangle) using X followed by H.
-4. Apply Z to (|+\rangle) and verify that the result is (|-\rangle).
-5. Create a two-qubit state in which qubit zero is (|1\rangle) and qubit one is (|0\rangle). Print its Qiskit probability label.
-6. Create (|\Phi^+\rangle) and print its exact probabilities.
-7. Sample (|+\rangle) for 5,000 shots using `StatevectorSampler`.
-8. Calculate (\langle Z\rangle) for (|0\rangle) using `StatevectorEstimator`.
-9. Construct the density matrix of (|+\rangle) and print its purity.
+1. Create a one-qubit circuit that prepares $|1\rangle$.
+2. Create $|+\rangle$ and print its statevector.
+3. Create $|-\rangle$ using X followed by H.
+4. Apply Z to $|+\rangle$ and verify that the result is $|-\rangle$.
+5. Create a two-qubit state in which qubit zero is $|1\rangle$ and qubit one is $|0\rangle$. Print its Qiskit probability label.
+6. Create $|\Phi^+\rangle$ and print its exact probabilities.
+7. Sample $|+\rangle$ for 5,000 shots using `StatevectorSampler`.
+8. Calculate $\langle Z\rangle$ for $|0\rangle$ using `StatevectorEstimator`.
+9. Construct the density matrix of $|+\rangle$ and print its purity.
 10. Create the maximally mixed single-qubit density matrix and print its probabilities.
 
 ### D. Circuit-output prediction
 
 For each circuit, predict the ideal computational-basis output probabilities.
 
-1. Initial (|0\rangle), followed by X.
-2. Initial (|0\rangle), followed by H.
-3. Initial (|0\rangle), followed by H and then H.
-4. Initial (|0\rangle), followed by H, Z, and H.
-5. Initial (|00\rangle), followed by H on qubit zero and CX from qubit zero to qubit one.
+1. Initial $|0\rangle$, followed by X.
+2. Initial $|0\rangle$, followed by H.
+3. Initial $|0\rangle$, followed by H and then H.
+4. Initial $|0\rangle$, followed by H, Z, and H.
+5. Initial $|00\rangle$, followed by H on qubit zero and CX from qubit zero to qubit one.
 
 ### E. Certification-style multiple-choice questions
 
-#### 1. Which expression gives the probability of measuring zero from (|\psi\rangle=\alpha|0\rangle+\beta|1\rangle)?
+#### 1. Which expression gives the probability of measuring zero from $|\psi\rangle=\alpha|0\rangle+\beta|1\rangle$?
 
-A. (\alpha)
-B. (\alpha^2) in every case
-C. (|\alpha|^2)
-D. (|\alpha|)
+A. $\alpha$
+B. $\alpha^2$ in every case
+C. $|\alpha|^2$
+D. $|\alpha|$
 
 #### 2. Which pair differs only by global phase?
 
-A. (|+\rangle) and (|-\rangle)
-B. (|0\rangle) and (-|0\rangle)
-C. (|0\rangle) and (|1\rangle)
-D. ((|0\rangle+|1\rangle)/\sqrt{2}) and (|0\rangle)
+A. $|+\rangle$ and $|-\rangle$
+B. $|0\rangle$ and $-|0\rangle$
+C. $|0\rangle$ and $|1\rangle$
+D. $(|0\rangle+|1\rangle)/\sqrt{2}$ and $|0\rangle$
 
 #### 3. What does `StatevectorSampler` return from a measured circuit?
 
@@ -5251,17 +5237,17 @@ D. A density matrix for every shot
 
 #### 4. Which state is entangled?
 
-A. (|00\rangle)
-B. (|+\rangle\otimes|0\rangle)
-C. ((|00\rangle+|11\rangle)/\sqrt{2})
-D. (|1\rangle\otimes|1\rangle)
+A. $|00\rangle$
+B. $|+\rangle\otimes|0\rangle$
+C. $(|00\rangle+|11\rangle)/\sqrt{2}$
+D. $|1\rangle\otimes|1\rangle$
 
-#### 5. What is (\langle Z\rangle) for (|+\rangle)?
+#### 5. What is $\langle Z\rangle$ for $|+\rangle$?
 
-A. (+1)
-B. (-1)
-C. (0)
-D. (1/2)
+A. $+1$
+B. $-1$
+C. $0$
+D. $1/2$
 
 ---
 
@@ -5275,9 +5261,9 @@ A classical bit has a definite value of zero or one.
 
 A qubit is represented by a quantum state:
 
-[
+$$
 \alpha|0\rangle+\beta|1\rangle
-]
+$$
 
 Its amplitudes determine possible measurement outcomes and interference behaviour.
 
@@ -5289,9 +5275,9 @@ A probability must be a real number between zero and one.
 
 The probability is calculated using the squared magnitude:
 
-[
+$$
 P=|\alpha|^2
-]
+$$
 
 #### 3. Same probabilities, different states
 
@@ -5299,17 +5285,17 @@ The states may contain different relative phases.
 
 For example:
 
-[
+$$
 |+\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 and:
 
-[
+$$
 |-\rangle=
 \frac{|0\rangle-|1\rangle}{\sqrt{2}}
-]
+$$
 
 both give 50–50 Z-basis probabilities, but H maps them to different outcomes.
 
@@ -5317,9 +5303,9 @@ both give 50–50 Z-basis probabilities, but H maps them to different outcomes.
 
 After an ideal computational-basis measurement, the state is updated to the basis state corresponding to the result.
 
-A result of zero leaves the measured qubit in (|0\rangle).
+A result of zero leaves the measured qubit in $|0\rangle$.
 
-A result of one leaves it in (|1\rangle).
+A result of one leaves it in $|1\rangle$.
 
 #### 5. Global versus relative phase
 
@@ -5327,15 +5313,15 @@ Global phase multiplies every amplitude by the same unit-magnitude complex numbe
 
 Relative phase changes one component relative to another and can affect interference.
 
-#### 6. Why (2^n) entries
+#### 6. Why $2^n$ entries
 
 Each qubit has two basis labels.
 
-For (n) qubits, the number of combined bit strings is:
+For $n$ qubits, the number of combined bit strings is:
 
-[
+$$
 2\times2\times\cdots\times2=2^n
-]
+$$
 
 Each combined basis state requires an amplitude.
 
@@ -5369,270 +5355,270 @@ No single pure statevector contains all of this uncertainty. A density matrix is
 
 Given:
 
-[
+$$
 \begin{bmatrix}
-1/\sqrt{3}\
+1/\sqrt{3}\\
 \sqrt{2/3}
 \end{bmatrix}
-]
+$$
 
 Calculate squared magnitudes:
 
-[
+$$
 \left|\frac{1}{\sqrt{3}}\right|^2=\frac{1}{3}
-]
+$$
 
-[
+$$
 \left|\sqrt{\frac{2}{3}}\right|^2=\frac{2}{3}
-]
+$$
 
 Add:
 
-[
+$$
 \frac{1}{3}+\frac{2}{3}=1
-]
+$$
 
 The vector is normalised.
 
 #### 2. Measurement probabilities
 
-[
+$$
 |\psi\rangle=
 \frac{1}{2}|0\rangle+
 \frac{\sqrt{3}}{2}|1\rangle
-]
+$$
 
 For zero:
 
-[
+$$
 P(0)=\left|\frac{1}{2}\right|^2=\frac{1}{4}
-]
+$$
 
 For one:
 
-[
+$$
 P(1)=\left|\frac{\sqrt{3}}{2}\right|^2=\frac{3}{4}
-]
+$$
 
 #### 3. Squared complex magnitude
 
-[
+$$
 z=\frac{1+i}{\sqrt{2}}
-]
+$$
 
 Real part:
 
-[
+$$
 \frac{1}{\sqrt{2}}
-]
+$$
 
 Imaginary part:
 
-[
+$$
 \frac{1}{\sqrt{2}}
-]
+$$
 
 Therefore:
 
-[
+$$
 |z|^2=
 \frac{1}{2}+\frac{1}{2}=1
-]
+$$
 
-#### 4. Normalising ([1,i]^T)
+#### 4. Normalising $[1,i]^T$
 
 Calculate squared norm:
 
-[
+$$
 |1|^2+|i|^2=1+1=2
-]
+$$
 
 Norm:
 
-[
+$$
 \sqrt{2}
-]
+$$
 
 Normalised vector:
 
-[
+$$
 \begin{bmatrix}
-1/\sqrt{2}\
+1/\sqrt{2}\\
 i/\sqrt{2}
 \end{bmatrix}
-]
+$$
 
-#### 5. (X|1\rangle)
+#### 5. $X|1\rangle$
 
-[
+$$
 X=
 \begin{bmatrix}
-0&1\
+0&1\\
 1&0
 \end{bmatrix}
-]
+$$
 
-[
+$$
 |1\rangle=
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
 Multiply:
 
-[
+$$
 X|1\rangle=
 \begin{bmatrix}
-1\
+1\\
 0
 \end{bmatrix}
 =|0\rangle
-]
+$$
 
-#### 6. (Z|+\rangle)
+#### 6. $Z|+\rangle$
 
-[
+$$
 |+\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
-Z leaves (|0\rangle) unchanged and negates (|1\rangle):
+Z leaves $|0\rangle$ unchanged and negates $|1\rangle$:
 
-[
+$$
 Z|+\rangle=
 \frac{|0\rangle-|1\rangle}{\sqrt{2}}
 =|-\rangle
-]
+$$
 
-#### 7. (H|-\rangle)
+#### 7. $H|-\rangle$
 
 The Hadamard transformations include:
 
-[
+$$
 H|-\rangle=|1\rangle
-]
+$$
 
 Manual calculation:
 
-[
+$$
 H|-\rangle
-==========
+=
 
 \frac{1}{2}
 \begin{bmatrix}
-1&1\
+1&1\\
 1&-1
 \end{bmatrix}
 \begin{bmatrix}
-1\
+1\\
 -1
 \end{bmatrix}
-]
+$$
 
-# [
+$$
 
 \frac{1}{2}
 \begin{bmatrix}
-0\
+0\\
 2
 \end{bmatrix}
-=============
+=
 
 \begin{bmatrix}
-0\
+0\\
 1
 \end{bmatrix}
-]
+$$
 
-#### 8. (\langle0|+\rangle)
+#### 8. $\langle0|+\rangle$
 
-[
+$$
 \langle0|=
 \begin{bmatrix}
 1&0
 \end{bmatrix}
-]
+$$
 
-[
+$$
 |+\rangle=
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1\
+1\\
 1
 \end{bmatrix}
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle0|+\rangle=
 \frac{1}{\sqrt{2}}
-]
+$$
 
 Its squared magnitude is:
 
-[
+$$
 \frac{1}{2}
-]
+$$
 
-#### 9. Expand (|+\rangle\otimes|1\rangle)
+#### 9. Expand $|+\rangle\otimes|1\rangle$
 
-[
+$$
 |+\rangle=
 \frac{|0\rangle+|1\rangle}{\sqrt{2}}
-]
+$$
 
 Therefore:
 
-[
+$$
 |+\rangle\otimes|1\rangle
-=========================
+=
 
 \frac{|0\rangle\otimes|1\rangle+
 |1\rangle\otimes|1\rangle}{\sqrt{2}}
-]
+$$
 
-# [
+$$
 
 \frac{|01\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 #### 10. Z expectation
 
-[
+$$
 |\psi\rangle=
 \frac{\sqrt{3}}{2}|0\rangle+
 \frac{1}{2}|1\rangle
-]
+$$
 
 Probabilities:
 
-[
+$$
 P(0)=\frac{3}{4}
-]
+$$
 
-[
+$$
 P(1)=\frac{1}{4}
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle Z\rangle=P(0)-P(1)
-]
+$$
 
-[
+$$
 =\frac{3}{4}-\frac{1}{4}
 =\frac{1}{2}
-]
+$$
 
 ---
 
 ### C. Qiskit coding solutions
 
-#### 1. Prepare (|1\rangle)
+#### 1. Prepare $|1\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5652,7 +5638,7 @@ Expected statevector:
 [0.+0.j 1.+0.j]
 ```
 
-#### 2. Create (|+\rangle)
+#### 2. Create $|+\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5666,7 +5652,7 @@ state = Statevector.from_instruction(circuit)
 print(state.data)
 ```
 
-#### 3. Create (|-\rangle)
+#### 3. Create $|-\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5681,7 +5667,7 @@ state = Statevector.from_instruction(circuit)
 print(state.data)
 ```
 
-#### 4. Apply Z to (|+\rangle)
+#### 4. Apply Z to $|+\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5702,7 +5688,7 @@ Expected output:
 [ 0.70710678+0.j -0.70710678+0.j]
 ```
 
-#### 5. Qubit zero in (|1\rangle), qubit one in (|0\rangle)
+#### 5. Qubit zero in $|1\rangle$, qubit one in $|0\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5722,7 +5708,7 @@ Expected output:
 {'01': 1.0}
 ```
 
-#### 6. Create (|\Phi^+\rangle)
+#### 6. Create $|\Phi^+\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5743,7 +5729,7 @@ Expected output:
 {'00': 0.5, '11': 0.5}
 ```
 
-#### 7. Sample (|+\rangle)
+#### 7. Sample $|+\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5761,7 +5747,7 @@ print(result[0].data.meas.get_counts())
 
 Expected behaviour: approximately 2,500 zeros and 2,500 ones.
 
-#### 8. Calculate (\langle Z\rangle) for (|0\rangle)
+#### 8. Calculate $\langle Z\rangle$ for $|0\rangle$
 
 ```python
 from qiskit import QuantumCircuit
@@ -5783,7 +5769,7 @@ Expected output:
 1.0
 ```
 
-#### 9. Density matrix and purity of (|+\rangle)
+#### 9. Density matrix and purity of $|+\rangle$
 
 ```python
 from qiskit.quantum_info import Statevector, DensityMatrix
@@ -5832,49 +5818,49 @@ Expected output:
 
 ### D. Circuit-output solutions
 
-#### 1. X on (|0\rangle)
+#### 1. X on $|0\rangle$
 
-[
+$$
 X|0\rangle=|1\rangle
-]
+$$
 
 Therefore:
 
-[
+$$
 P(1)=1
-]
+$$
 
-#### 2. H on (|0\rangle)
+#### 2. H on $|0\rangle$
 
-[
+$$
 H|0\rangle=|+\rangle
-]
+$$
 
 Therefore:
 
-[
+$$
 P(0)=\frac{1}{2}
-]
+$$
 
-[
+$$
 P(1)=\frac{1}{2}
-]
+$$
 
 #### 3. H followed by H
 
-[
+$$
 H(H|0\rangle)=H|+\rangle=|0\rangle
-]
+$$
 
 Therefore:
 
-[
+$$
 P(0)=1
-]
+$$
 
 #### 4. H, Z, H
 
-[
+$$
 |0\rangle
 \xrightarrow{H}
 |+\rangle
@@ -5882,31 +5868,31 @@ P(0)=1
 |-\rangle
 \xrightarrow{H}
 |1\rangle
-]
+$$
 
 Therefore:
 
-[
+$$
 P(1)=1
-]
+$$
 
 #### 5. Bell-state circuit
 
-[
+$$
 |00\rangle
 \xrightarrow{H,\ CX}
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 Therefore:
 
-[
+$$
 P(00)=\frac{1}{2}
-]
+$$
 
-[
+$$
 P(11)=\frac{1}{2}
-]
+$$
 
 All other computational-basis probabilities are zero.
 
@@ -5918,17 +5904,17 @@ All other computational-basis probabilities are zero.
 
 The probability is:
 
-[
+$$
 |\alpha|^2
-]
+$$
 
 #### 2. Correct answer: B
 
-[
+$$
 -|0\rangle
-]
+$$
 
-differs from (|0\rangle) by a global factor of (-1).
+differs from $|0\rangle$ by a global factor of $-1$.
 
 #### 3. Correct answer: B
 
@@ -5936,26 +5922,26 @@ differs from (|0\rangle) by a global factor of (-1).
 
 #### 4. Correct answer: C
 
-[
+$$
 \frac{|00\rangle+|11\rangle}{\sqrt{2}}
-]
+$$
 
 cannot be separated into two independent single-qubit states.
 
 #### 5. Correct answer: C
 
-For (|+\rangle):
+For $|+\rangle$:
 
-[
+$$
 P(0)=P(1)=\frac{1}{2}
-]
+$$
 
 Therefore:
 
-[
+$$
 \langle Z\rangle=
 \frac{1}{2}-\frac{1}{2}=0
-]
+$$
 
 ---
 
@@ -5969,16 +5955,16 @@ Before moving to the next module, confirm that you can perform each task without
 
 * [ ] I can distinguish a qubit from a classical bit.
 
-* [ ] I can write (|0\rangle) and (|1\rangle) as vectors.
+* [ ] I can write $|0\rangle$ and $|1\rangle$ as vectors.
 
 * [ ] I can represent a single-qubit pure state as:
 
-  [
+  $$
   \begin{bmatrix}
-  \alpha\
+  \alpha\\
   \beta
   \end{bmatrix}
-  ]
+  $$
 
 * [ ] I can explain the difference between amplitudes and probabilities.
 
@@ -5990,7 +5976,7 @@ Before moving to the next module, confirm that you can perform each task without
 
 * [ ] I understand the required meaning of a complex number.
 * [ ] I can calculate a complex magnitude.
-* [ ] I can multiply a (2\times2) matrix by a two-entry vector.
+* [ ] I can multiply a $2\times2$ matrix by a two-entry vector.
 * [ ] I understand why gates act through matrix multiplication.
 * [ ] I can calculate a basic inner product.
 * [ ] I can explain orthogonality.
@@ -5999,15 +5985,15 @@ Before moving to the next module, confirm that you can perform each task without
 ### Gates and circuits
 
 * [ ] I can explain the actions of X, H, Z, and CX.
-* [ ] I can manually calculate (X|0\rangle).
-* [ ] I can manually calculate (H|0\rangle).
+* [ ] I can manually calculate $X|0\rangle$.
+* [ ] I can manually calculate $H|0\rangle$.
 * [ ] I can explain how H makes some phase differences observable.
 * [ ] I understand that gate order matters.
 
 ### Multiple qubits
 
 * [ ] I can use a tensor product to combine two states.
-* [ ] I know that (n) qubits require (2^n) amplitudes.
+* [ ] I know that $n$ qubits require $2^n$ amplitudes.
 * [ ] I can identify the basis states of a two-qubit system.
 * [ ] I understand Qiskit’s displayed bit ordering.
 * [ ] I can explain why a Bell state is not a product state.
@@ -6026,7 +6012,7 @@ Before moving to the next module, confirm that you can perform each task without
 ### Qiskit
 
 * [ ] I can create circuits using `QuantumCircuit`.
-* [ ] I can prepare (|0\rangle), (|1\rangle), (|+\rangle), and (|-\rangle).
+* [ ] I can prepare $|0\rangle$, $|1\rangle$, $|+\rangle$, and $|-\rangle$.
 * [ ] I can inspect an ideal state using `Statevector`.
 * [ ] I can calculate exact probabilities with `probabilities_dict()`.
 * [ ] I can add measurements using `measure_all()`.
@@ -6045,9 +6031,9 @@ You now understand that a quantum operation changes a statevector.
 
 When you study Pauli gates, rotation gates, controlled gates, and general unitary operations, you will be able to connect each operation to:
 
-[
+$$
 |\psi_{\text{out}}\rangle=U|\psi_{\text{in}}\rangle
-]
+$$
 
 ## Circuit construction
 
