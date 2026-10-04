@@ -29,35 +29,62 @@ import java.util.*;
 public class minimalGridPath {
     // but here we also have a catch we need the smallest path with smaller lexographical order, not just lexographical order because BA is smaller that AAA. BUT IMPORTANT: in a grid, if we have only down and right possible direction, all the path lengths will be same
     // We can't just directly choose the smallest character because we might see a case where both the current choises are same but the next choises are different, Hence we need to use frontier recursion - if both are same, call recursion for both and choose the one which is smaller.
-    public static String recursion(char[][] grid,int i, int j, int n, StringBuffer sb){
-        StringBuffer curr = new StringBuffer();
+    // public static String recursion(char[][] grid,int i, int j, int n, StringBuffer sb){
+    //     StringBuffer curr = new StringBuffer();
         
+    // }
+
+    // // Lexographically dont mean smallest sum of the path but it means small characters comes first and larger at last hence AZZZ is better that BAAA
+    // public static String tabulation(char[][]grid, int n){
+    //     int dp[][]=new int[n+1][n+1];
+    //     for(int i=n-1;i>=0;i--){
+    //         for(int j=n-1;j>=0;j--){
+    //             dp[i][j]=Math.min(dp[i+1][j],dp[i][j+1])+grid[i][j]-'a';
+    //         }
+    //     }
+    //     int i=0,j=0;
+    //     StringBuffer sb = new StringBuffer();
+    //     while (i != n - 1 || j != n - 1) {
+    //         sb.append(grid[i][j]);
+    //             if (i == n - 1) {
+    //             j++;
+    //         } else if (j == n - 1) {
+    //             i++;
+    //         } else if (dp[i + 1][j] < dp[i][j + 1]) {
+    //             i++;
+    //         } else {
+    //             j++;
+    //         }
+    //     }
+    //     sb.append(grid[i][j]);
+    //     return sb.toString();
+    // }
+    public static void recursion(char[][]grid, int i, int j, StringBuffer sb, ArrayList<String> strings){
+        if(i == grid.length -1 && j == grid.length - 1){
+            sb.append(grid[i][j]);
+            strings.add(sb.toString());
+            sb.deleteCharAt(sb.length() - 1);
+            return;
+        }
+        if(i==grid.length || j == grid.length)return;
+
+        recursion(grid, i + 1, j, sb.append(grid[i][j]), strings);
+        sb.deleteCharAt(sb.length() - 1);
+        recursion(grid, i, j + 1, sb.append(grid[i][j]), strings);
+        sb.deleteCharAt(sb.length() - 1);
+
+        return;
     }
 
-    // Lexographically dont mean smallest sum of the path but it means small characters comes first and larger at last hence AZZZ is better that BAAA
-    public static String tabulation(char[][]grid, int n){
-        int dp[][]=new int[n+1][n+1];
-        for(int i=n-1;i>=0;i--){
-            for(int j=n-1;j>=0;j--){
-                dp[i][j]=Math.min(dp[i+1][j],dp[i][j+1])+grid[i][j]-'a';
-            }
-        }
-        int i=0,j=0;
+    public static String findSmallestLexographicalString(ArrayList<String>strings){
+        return Collections.min(strings);
+    }
+
+    public static String bruteForce(char[][] grid){
+        ArrayList<String> strings = new ArrayList<>();
         StringBuffer sb = new StringBuffer();
-        while (i != n - 1 || j != n - 1) {
-            sb.append(grid[i][j]);
-                if (i == n - 1) {
-                j++;
-            } else if (j == n - 1) {
-                i++;
-            } else if (dp[i + 1][j] < dp[i][j + 1]) {
-                i++;
-            } else {
-                j++;
-            }
-        }
-        sb.append(grid[i][j]);
-        return sb.toString();
+        recursion(grid, 0, 0, sb, strings);
+        return findSmallestLexographicalString(strings);
     }
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
@@ -69,8 +96,7 @@ public class minimalGridPath {
                 grid[i][j] = s.charAt(j);
             }
         }
-        StringBuffer sb = new StringBuffer();
-        recursion(grid, 0, 0, n, sb);
-        System.out.println(sb);
+        String answer = bruteForce(grid);
+        System.out.println(answer);
     }
 }
