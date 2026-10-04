@@ -39,8 +39,12 @@ public class moneySums {
         // Same starting state as memo(coins, 0, 0, ...)
         dp[0][0] = true;
 
-        // todo
-        
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                
+            }
+        }
+
     }
     public static void memo(int[] coins, int index,int sum, TreeSet<Integer>set, boolean[][]dp){
         if(index == coins.length){

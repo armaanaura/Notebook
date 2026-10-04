@@ -122,33 +122,77 @@ public class minimalGridPath {
         return dp[grid.length -1][grid.length -1];
     }
 
-    public static int encode(int i, int j, int n){
-        return i * n + j;
+    private static int N;
+    public static int encode(int i, int j){
+        return i * N + j;
     }
-    public static int[] decode(int key, int n){
-        return new int[]{key / n, key % n};
+    public static int[] decode(int key){
+        return new int[]{key / N, key % N};
     }
     public static String bfs(char[][] grid){
-        int n = grid.length;
-        StringBuffer sb = new StringBuffer();
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(encode(0,0,n));
+        boolean[] visited = new boolean[N*N];
+
+        queue.add(encode(0,0));
+        visited[encode(0,0)] = true;
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(grid[0][0]);
+
         while(queue.isEmpty() == false){
-            int[] currIndices = decode(queue.poll(), n);
-            int i = currIndices[0];
-            int j = currIndices[1];
+            int queueSize = queue.size();
 
-            char bottomChar = i + 1 < n - 1 ? grid[i + 1][j] : null;
-            char rightChar = j + 1 < n - 1 ? grid[i + 1][j] : null;
+            ArrayList<Integer> keys = new ArrayList<>();
+            char minChar = 'Z';
 
-            if(bottomChar == rightChar){
-                queue.add(encode(i + 1, j, n));
-                queue.add(encode(i, j + 1, n));
-                sb.append(bottomChar);
+            for(int i = 0; i < queueSize; i++){
+                int[] currIndices = decode(queue.poll());
+
+                int currI = currIndices[0];
+                int currJ = currIndices[1];
+
+                if(currI + 1 < N){
+                    int key = encode(currI + 1, currJ);
+                    char ch = grid[currI + 1][currJ];
+
+                    if(ch < minChar){
+                        minChar = ch;
+                        keys.clear();
+                        keys.add(key);
+                    }else if(ch == minChar){
+                        keys.add(key);
+                    }
+                }
+
+                if(currJ + 1 < N){
+                    int key = encode(currI, currJ + 1);
+                    char ch = grid[currI][currJ + 1];
+
+                    if(ch < minChar){
+                        minChar = ch;
+                        keys.clear();
+                        keys.add(key);
+                    }else if(ch == minChar){
+                        keys.add(key);
+                    }
+                }
             }
-            
+
+            if(keys.isEmpty())break;
+
+            sb.append(minChar);
+
+            for(int key : keys){
+                if(visited[key] == false){
+                    visited[key] = true;
+                    queue.add(key);
+                }
+            }
         }
+
+        return sb.toString();
     }
+    
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
@@ -159,8 +203,10 @@ public class minimalGridPath {
                 grid[i][j] = s.charAt(j);
             }
         }
+        N = n;
         // String answer = bruteForce(grid);
-        String answer = tabulation(grid);
+        // String answer = tabulation(grid);
+        String answer = bfs(grid);
         System.out.println(answer);
     }
 }
