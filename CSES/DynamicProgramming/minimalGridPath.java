@@ -59,18 +59,30 @@ public class minimalGridPath {
     //     sb.append(grid[i][j]);
     //     return sb.toString();
     // }
-    public static void recursion(char[][]grid, int i, int j, StringBuffer sb, ArrayList<String> strings){
+    public static void recursion(char[][]grid, int i, int j, StringBuffer sb, ArrayList<String> strings, String[][] dp){
         if(i == grid.length -1 && j == grid.length - 1){
             sb.append(grid[i][j]);
             strings.add(sb.toString());
+            if(dp[i][j] == null || dp[i][j].compareTo(sb.toString()) <= 0){
+                dp[i][j] = sb.toString();
+            }
             sb.deleteCharAt(sb.length() - 1);
             return;
         }
         if(i==grid.length || j == grid.length)return;
 
-        recursion(grid, i + 1, j, sb.append(grid[i][j]), strings);
-        sb.deleteCharAt(sb.length() - 1);
-        recursion(grid, i, j + 1, sb.append(grid[i][j]), strings);
+        sb.append(grid[i][j]);
+        if(dp[i][j] != null && dp[i][j].compareTo(sb.toString()) <= 0){
+            sb.deleteCharAt(sb.length() - 1);
+            return;
+        }
+        
+        if(dp[i][j] == null || sb.toString().compareTo(dp[i][j]) < 0){
+            dp[i][j] = sb.toString();
+        }
+
+        recursion(grid, i + 1, j, sb, strings, dp);
+        recursion(grid, i, j + 1, sb, strings, dp);
         sb.deleteCharAt(sb.length() - 1);
 
         return;
@@ -81,10 +93,61 @@ public class minimalGridPath {
     }
 
     public static String bruteForce(char[][] grid){
+        String[][] dp = new String[grid.length][grid.length];
         ArrayList<String> strings = new ArrayList<>();
         StringBuffer sb = new StringBuffer();
-        recursion(grid, 0, 0, sb, strings);
+        recursion(grid, 0, 0, sb, strings, dp);
         return findSmallestLexographicalString(strings);
+    }
+
+    public static String tabulation(char[][] grid){ // gives TLE also, because we are storing large strings at each index and comparing them also
+        String[][]dp = new String[grid.length][grid.length];
+        dp[0][0] = "" + grid[0][0];
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid.length; j++){
+                if(i == 0 && j == 0)continue;
+                String top = i != 0 ? "" + dp[i-1][j] : "ZZ";
+                String left = j != 0 ? "" + dp[i][j-1] : "ZZ";
+
+                top = top + grid[i][j];
+                left = left + grid[i][j];
+
+                if(top.compareTo(left) < 0){
+                    dp[i][j] = top;
+                }else{
+                    dp[i][j] = left;
+                }
+            }
+        }
+        return dp[grid.length -1][grid.length -1];
+    }
+
+    public static int encode(int i, int j, int n){
+        return i * n + j;
+    }
+    public static int[] decode(int key, int n){
+        return new int[]{key / n, key % n};
+    }
+    public static String bfs(char[][] grid){
+        int n = grid.length;
+        StringBuffer sb = new StringBuffer();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(encode(0,0,n));
+        while(queue.isEmpty() == false){
+            int[] currIndices = decode(queue.poll(), n);
+            int i = currIndices[0];
+            int j = currIndices[1];
+
+            char bottomChar = i + 1 < n - 1 ? grid[i + 1][j] : null;
+            char rightChar = j + 1 < n - 1 ? grid[i + 1][j] : null;
+
+            if(bottomChar == rightChar){
+                queue.add(encode(i + 1, j, n));
+                queue.add(encode(i, j + 1, n));
+                sb.append(bottomChar);
+            }
+            
+        }
     }
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
@@ -96,7 +159,8 @@ public class minimalGridPath {
                 grid[i][j] = s.charAt(j);
             }
         }
-        String answer = bruteForce(grid);
+        // String answer = bruteForce(grid);
+        String answer = tabulation(grid);
         System.out.println(answer);
     }
 }
